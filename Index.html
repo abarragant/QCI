@@ -1,1 +1,2391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Control de Calidad Interno · Hematología & Coagulación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy-mid: #1a2f45;
+  --navy-light: #243b55;
+  --teal: #1a9b8a;
+  --teal-light: #22bba8;
+  --teal-pale: #e6f7f5;
+  --amber: #e8a838;
+  --amber-pale: #fef8ec;
+  --red: #d94f3d;
+  --red-pale: #fdf0ee;
+  --green: #2e9e6b;
+  --green-pale: #edf7f2;
+  --white: #ffffff;
+  --off-white: #f8f9fc;
+  --gray-50: #f4f5f7;
+  --gray-100: #e8eaed;
+  --gray-200: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-600: #4b5563;
+  --gray-800: #1f2937;
+  --text: #1f2937;
+  --text-light: #4b5563;
+  --border: #e2e6ea;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+  --shadow-lg: 0 4px 6px rgba(0,0,0,.07), 0 12px 40px rgba(0,0,0,.1);
+  --radius: 10px;
+  --sidebar-w: 260px;
+}
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--text);
+  line-height: 1.65;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ─── SIDEBAR ─── */
+#sidebar {
+  width: var(--sidebar-w);
+  background: var(--navy);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.sidebar-logo .logo-icon {
+  width: 38px; height: 38px;
+  background: var(--teal);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+.sidebar-logo h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  color: var(--white);
+  line-height: 1.3;
+  font-weight: 600;
+}
+.sidebar-logo p {
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  margin-top: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: .04em;
+}
+
+nav { padding: 16px 0; flex: 1; }
+
+.nav-section {
+  padding: 6px 16px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  margin-top: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: rgba(255,255,255,.65);
+  font-size: 13px;
+  font-weight: 400;
+  transition: all .2s;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+}
+.nav-item:hover { color: var(--white); background: rgba(255,255,255,.06); }
+.nav-item.active {
+  color: var(--white);
+  background: rgba(26,155,138,.18);
+  border-left-color: var(--teal);
+  font-weight: 500;
+}
+.nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--teal);
+  color: white;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  font-size: 11px;
+  color: rgba(255,255,255,.3);
+  line-height: 1.5;
+}
+
+/* ─── MAIN CONTENT ─── */
+#main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+}
+
+.section-page {
+  display: none;
+  padding: 40px 48px;
+  max-width: 960px;
+  animation: fadeIn .3s ease;
+}
+.section-page.active { display: block; }
+
+@keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+/* ─── PAGE HEADERS ─── */
+.page-header {
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.page-header .breadcrumb {
+  font-size: 11px;
+  color: var(--gray-400);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: .05em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.page-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--navy);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.page-header .subtitle {
+  color: var(--text-light);
+  font-size: 15px;
+  max-width: 680px;
+}
+.norm-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.norm-pill {
+  font-size: 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  background: var(--teal-pale);
+  color: var(--teal);
+  border: 1px solid rgba(26,155,138,.25);
+}
+
+/* ─── INTRO PANEL (collapsible) ─── */
+.intro-panel {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  border-radius: var(--radius);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+.intro-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  cursor: pointer;
+  user-select: none;
+}
+.intro-toggle .label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 500;
+}
+.intro-toggle .tag {
+  background: var(--teal);
+  color: white;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+.intro-toggle .arrow {
+  color: rgba(255,255,255,.5);
+  font-size: 18px;
+  transition: transform .25s;
+}
+.intro-body {
+  display: none;
+  padding: 0 22px 22px;
+}
+.intro-body.open { display: block; }
+.intro-toggle.open .arrow { transform: rotate(180deg); }
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 4px;
+}
+.intro-card {
+  background: rgba(255,255,255,.07);
+  border-radius: 8px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.intro-card h4 {
+  color: var(--teal-light);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.intro-card p, .intro-card li {
+  font-size: 13px;
+  color: rgba(255,255,255,.75);
+  line-height: 1.6;
+}
+.intro-card ul { padding-left: 16px; }
+.intro-card li { margin-bottom: 4px; }
+
+/* ─── STEP CARDS (accordion) ─── */
+.steps-container { display: flex; flex-direction: column; gap: 10px; }
+
+.step-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow .2s;
+}
+.step-card:hover { box-shadow: var(--shadow-lg); }
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s;
+}
+.step-header:hover { background: var(--gray-50); }
+.step-header.open { background: var(--teal-pale); }
+
+.step-number {
+  width: 32px; height: 32px;
+  background: var(--navy);
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.step-header.open .step-number { background: var(--teal); }
+
+.step-title-block { flex: 1; }
+.step-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.step-subtitle {
+  font-size: 12px;
+  color: var(--gray-400);
+  margin-top: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.step-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.step-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.tag-iso { background: #ede9fe; color: #6d28d9; }
+.tag-clsi { background: #dbeafe; color: #1d4ed8; }
+.tag-icsh { background: #fce7f3; color: #be185d; }
+.tag-eflm { background: #d1fae5; color: #065f46; }
+.tag-why { background: #fef3c7; color: #92400e; }
+
+.step-arrow { color: var(--gray-400); font-size: 18px; transition: transform .25s; flex-shrink: 0; }
+.step-header.open .step-arrow { transform: rotate(180deg); color: var(--teal); }
+
+.step-body {
+  display: none;
+  padding: 0 20px 20px 66px;
+  border-top: 1px solid var(--gray-100);
+}
+.step-body.open { display: block; }
+
+.step-body h4 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--teal);
+  margin: 16px 0 8px;
+}
+
+.step-body p { font-size: 14px; color: var(--text-light); margin-bottom: 8px; line-height: 1.7; }
+.step-body ul, .step-body ol { padding-left: 18px; }
+.step-body li { font-size: 14px; color: var(--text-light); margin-bottom: 6px; line-height: 1.65; }
+.step-body strong { color: var(--text); font-weight: 600; }
+
+.source-box {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--gray-50);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 6px 6px 0;
+  font-size: 12px;
+  color: var(--text-light);
+}
+.source-box .src-label {
+  font-weight: 600;
+  color: var(--teal);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.warning-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--amber-pale);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #7c4a00;
+}
+.warning-box::before { content: "⚠️ "; }
+
+.alert-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--red-pale);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #7f1d1d;
+}
+
+.info-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--teal-pale);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #065f46;
+}
+
+/* ─── DATA TABLE ─── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 12px 0;
+}
+.data-table th {
+  background: var(--navy);
+  color: white;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+.data-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--gray-100);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.data-table tr:hover td { background: var(--gray-50); }
+.data-table code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  background: var(--gray-100);
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: var(--navy);
+}
+
+/* ─── DECISION TREE ─── */
+.decision-tree {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.dt-node {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+}
+.dt-diamond {
+  width: 28px; height: 28px;
+  background: var(--amber);
+  transform: rotate(45deg);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.dt-text { color: var(--text-light); line-height: 1.5; }
+.dt-yes { color: var(--green); font-weight: 600; margin-left: 8px; }
+.dt-no { color: var(--red); font-weight: 600; margin-left: 8px; }
+.dt-indent { padding-left: 38px; }
+.dt-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.dt-action.accept { background: var(--green-pale); color: var(--green); }
+.dt-action.reject { background: var(--red-pale); color: var(--red); }
+.dt-action.investigate { background: var(--amber-pale); color: #92400e; }
+
+/* ─── CALCULADORA ─── */
+.calc-section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.calc-header {
+  background: var(--navy);
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.calc-header h3 {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+.calc-header .calc-icon {
+  width: 34px; height: 34px;
+  background: var(--teal);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.calc-body { padding: 22px; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: .03em;
+}
+.form-group .help {
+  font-size: 11px;
+  color: var(--gray-400);
+  font-style: italic;
+  margin-top: 1px;
+}
+.form-group input, .form-group select, .form-group textarea {
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color .15s, box-shadow .15s;
+  outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(26,155,138,.12);
+}
+.form-group textarea {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'IBM Plex Sans', sans-serif;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.btn-primary:hover { background: var(--teal-light); }
+.btn-primary:active { transform: scale(.98); }
+.btn-secondary {
+  background: transparent;
+  color: var(--teal);
+  border: 1.5px solid var(--teal);
+  border-radius: 7px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'IBM Plex Sans', sans-serif;
+  cursor: pointer;
+  transition: all .15s;
+}
+.btn-secondary:hover { background: var(--teal-pale); }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+
+/* ─── RESULTS PANEL ─── */
+.results-panel {
+  display: none;
+  animation: fadeIn .3s ease;
+}
+.results-panel.show { display: block; }
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.result-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-align: center;
+}
+.result-card .rc-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--gray-400);
+  margin-bottom: 4px;
+}
+.result-card .rc-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.result-card .rc-unit {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-top: 1px;
+}
+
+/* Sigma semáforo */
+.sigma-display {
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.sigma-display.sigma-world { background: linear-gradient(135deg,#065f46,#047857); }
+.sigma-display.sigma-excellent { background: linear-gradient(135deg,#1e40af,#1d4ed8); }
+.sigma-display.sigma-good { background: linear-gradient(135deg,#1a9b8a,#0d9488); }
+.sigma-display.sigma-marginal { background: linear-gradient(135deg,#b45309,#d97706); }
+.sigma-display.sigma-poor { background: linear-gradient(135deg,#991b1b,#dc2626); }
+
+.sigma-value-big {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 52px;
+  font-weight: 600;
+  color: white;
+  line-height: 1;
+}
+.sigma-value-big .sigma-sym { font-size: 28px; vertical-align: super; }
+.sigma-info { flex: 1; }
+.sigma-info .sigma-label {
+  color: rgba(255,255,255,.9);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 6px;
+}
+.sigma-info .sigma-desc {
+  color: rgba(255,255,255,.75);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.westgard-recommendation {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+.westgard-recommendation h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wg-rule-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.wg-rule-card {
+  background: var(--off-white);
+  border-radius: 7px;
+  padding: 10px 12px;
+  text-align: center;
+}
+.wg-rule-card .rule-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.wg-rule-card .rule-desc {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.chart-wrapper {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.chart-wrapper h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.chart-wrapper .chart-note {
+  font-size: 12px;
+  color: var(--gray-400);
+  margin-bottom: 16px;
+}
+
+/* ─── WESTGARD VIOLATIONS ─── */
+.violations-list { margin-top: 12px; }
+.violation-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.violation-item.warn { background: var(--amber-pale); color: #78350f; }
+.violation-item.reject { background: var(--red-pale); color: #7f1d1d; }
+.violation-item.ok { background: var(--green-pale); color: #064e3b; }
+.violation-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.violation-dot.warn { background: var(--amber); }
+.violation-dot.reject { background: var(--red); }
+.violation-dot.ok { background: var(--green); }
+
+/* ─── REFERENCES PAGE ─── */
+.ref-grid { display: flex; flex-direction: column; gap: 8px; }
+.ref-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.ref-num {
+  width: 28px; height: 28px;
+  background: var(--navy);
+  color: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.ref-content { flex: 1; }
+.ref-content .ref-title { font-size: 14px; font-weight: 600; color: var(--navy); line-height: 1.4; margin-bottom: 3px; }
+.ref-content .ref-body { font-size: 13px; color: var(--text-light); line-height: 1.5; }
+.ref-content .ref-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+.ref-content a { color: var(--teal); text-decoration: none; font-size: 12px; }
+.ref-content a:hover { text-decoration: underline; }
+.region-note {
+  background: var(--amber-pale);
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #78350f;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* ─── FORMULA DISPLAY ─── */
+.formula-box {
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  text-align: center;
+}
+.formula-box .formula-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  color: var(--teal-light);
+  font-weight: 500;
+}
+.formula-box .formula-caption {
+  font-size: 12px;
+  color: rgba(255,255,255,.5);
+  margin-top: 6px;
+}
+
+/* ─── ERROR / EMPTY ─── */
+.error-msg {
+  background: var(--red-pale);
+  border: 1px solid #fca5a5;
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #991b1b;
+  margin-top: 10px;
+  display: none;
+}
+
+/* ─── PROGRESS TRACK ─── */
+.progress-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.pt-step {
+  display: flex;
+  align-items: center;
+}
+.pt-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--gray-100);
+  border: 2px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-400);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.pt-dot.done { background: var(--green-pale); border-color: var(--green); color: var(--green); }
+.pt-dot.current { background: var(--teal); border-color: var(--teal); color: white; }
+.pt-line { width: 32px; height: 2px; background: var(--gray-200); flex-shrink: 0; }
+.pt-line.done { background: var(--green); }
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  #sidebar { transform: translateX(-100%); }
+  #main { margin-left: 0; }
+  .section-page { padding: 24px 20px; }
+  .form-row, .form-row-3 { grid-template-columns: 1fr; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .wg-rule-grid { grid-template-columns: 1fr 1fr; }
+  .intro-grid { grid-template-columns: 1fr; }
+  .sigma-value-big { font-size: 36px; }
+}
+
+/* Tooltip */
+.tooltip-wrap { position: relative; display: inline-block; }
+.tooltip-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--gray-200);
+  color: var(--gray-600);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: help;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.tooltip-box {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: white;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border-radius: 7px;
+  white-space: normal;
+  width: 220px;
+  z-index: 200;
+  pointer-events: none;
+}
+.tooltip-wrap:hover .tooltip-box { display: block; }
+
+/* Coagulation special table */
+.coag-table-wrap { overflow-x: auto; margin: 12px 0; }
+
+.highlight-row td:first-child { border-left: 3px solid var(--teal); }
+
+/* Levey-Jennings canvas */
+#ljChart { max-height: 300px; }
+
+/* Run size recommendation box */
+.runsize-box {
+  background: linear-gradient(135deg, var(--navy-light), var(--navy));
+  border-radius: 10px;
+  padding: 20px 24px;
+  color: white;
+  margin-bottom: 20px;
+}
+.runsize-box h4 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--teal-light);
+  margin-bottom: 10px;
+}
+.runsize-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.rs-item { text-align: center; }
+.rs-item .rs-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+.rs-item .rs-lbl { font-size: 11px; color: rgba(255,255,255,.55); margin-top: 2px; letter-spacing: .04em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ SIDEBAR ════════════════ -->
+<div id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🧪</div>
+    <h1>Control de Calidad Interno</h1>
+    <p>HEMATOLOGÍA · COAGULACIÓN</p>
+  </div>
+  <nav>
+    <div class="nav-section">Introducción</div>
+    <a class="nav-item active" onclick="showSection('s0')">
+      <span class="nav-icon">🏠</span> Inicio & Conceptos
+    </a>
+
+    <div class="nav-section">Algoritmos paso a paso</div>
+    <a class="nav-item" onclick="showSection('s1')">
+      <span class="nav-icon">🔬</span> Nuevo Lote de Control
+      <span class="nav-badge">7 pasos</span>
+    </a>
+    <a class="nav-item" onclick="showSection('s2')">
+      <span class="nav-icon">⚗️</span> Nuevo Lote de Reactivo
+      <span class="nav-badge">8 pasos</span>
+    </a>
+
+    <div class="nav-section">Calculadoras</div>
+    <a class="nav-item" onclick="showSection('s3')">
+      <span class="nav-icon">📊</span> Sigma + Levey-Jennings
+    </a>
+    <a class="nav-item" onclick="showSection('s4')">
+      <span class="nav-icon">🔁</span> Verificación de Lote
+    </a>
+
+    <div class="nav-section">Recursos</div>
+    <a class="nav-item" onclick="showSection('s5')">
+      <span class="nav-icon">📚</span> Normativa & Referencias
+    </a>
+    <a class="nav-item" onclick="showSection('s6')">
+      <span class="nav-icon">📋</span> Tablas de Referencia
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    ISO 15189:2022 · CLSI C24-Ed4 · EP26-A · ICSH 2024 · EFLM biologicalvariation.eu · SEQCML · RD 1277/2003 (España)
+  </div>
+</div>
+
+<!-- ════════════════ MAIN ════════════════ -->
+<div id="main">
+
+<!-- ══════ SECCIÓN 0: INICIO ══════ -->
+<div id="s0" class="section-page active">
+  <div class="page-header">
+    <div class="breadcrumb">Inicio</div>
+    <h2>Guía de Control de Calidad Interno</h2>
+    <p class="subtitle">Material educativo interactivo paso a paso para la configuración, gestión y cálculo del sistema de control de calidad interno en laboratorios de hematología y coagulación.</p>
+    <div class="norm-pills">
+      <span class="norm-pill">ISO 15189:2022</span>
+      <span class="norm-pill">CLSI C24-Ed4</span>
+      <span class="norm-pill">CLSI EP26-A</span>
+      <span class="norm-pill">ICSH 2024</span>
+      <span class="norm-pill">EFLM / Var. Biológica</span>
+      <span class="norm-pill">SEQCML · ISP Chile</span>
+    </div>
+  </div>
+
+  <!-- Intro colapsable -->
+  <div class="intro-panel">
+    <div class="intro-toggle" onclick="toggleIntro(this)">
+      <div class="label">
+        <span>📖</span>
+        <span>¿Eres nuevo en control de calidad? Lee esto primero</span>
+        <span class="tag">CONCEPTOS BÁSICOS</span>
+      </div>
+      <span class="arrow">▾</span>
+    </div>
+    <div class="intro-body">
+      <div class="intro-grid">
+        <div class="intro-card">
+          <h4>¿Qué es el CCI?</h4>
+          <p>El Control de Calidad Interno (CCI) es un sistema de monitorización continua que permite detectar errores analíticos <em>antes</em> de que los resultados de pacientes sean liberados. Utiliza materiales de control con valores conocidos que se analizan junto con las muestras de pacientes.</p>
+        </div>
+        <div class="intro-card">
+          <h4>¿Por qué es obligatorio?</h4>
+          <ul>
+            <li>La <strong>ISO 15189:2022</strong> (sección 7.3.1) exige que los laboratorios clínicos acreditados implementen y documenten un sistema de CCI para todas las pruebas cuantitativas.</li>
+            <li>El <strong>RD 1277/2003</strong> (España) y normativas equivalentes latinoamericanas regulan la calidad analítica de los laboratorios clínicos.</li>
+          </ul>
+        </div>
+        <div class="intro-card">
+          <h4>¿Qué son las Reglas de Westgard?</h4>
+          <ul>
+            <li><strong>1₂ₛ:</strong> Advertencia — un valor supera ±2 DE</li>
+            <li><strong>1₃ₛ:</strong> Rechazar — un valor supera ±3 DE</li>
+            <li><strong>2₂ₛ:</strong> Rechazar — dos valores consecutivos superan +2DE o -2DE</li>
+            <li><strong>R₄ₛ:</strong> Rechazar — rango entre niveles &gt; 4 DE</li>
+            <li><strong>4₁ₛ:</strong> Rechazar — 4 valores consecutivos en el mismo lado de +1DE o -1DE</li>
+            <li><strong>10ₓ:</strong> Rechazar — 10 valores consecutivos en el mismo lado de la media</li>
+          </ul>
+        </div>
+        <div class="intro-card">
+          <h4>Concepto clave: Sigma Métrica</h4>
+          <p>La Sigma Métrica (σ) mide la calidad del método analítico en "sigmas". Un valor σ ≥ 6 indica un método de clase mundial; σ &lt; 3 indica que el método necesita mejoras urgentes.</p>
+          <p style="margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#22bba8;">σ = (TEa − Sesgo%) / CV%</p>
+        </div>
+        <div class="intro-card">
+          <h4>Materiales de control en coagulación</h4>
+          <ul>
+            <li>Usar <strong>material de tercera parte</strong> (independiente del fabricante del equipo) — ISO 15189</li>
+            <li>Matriz de origen humano (mayor similitud con muestras reales)</li>
+            <li>Mínimo <strong>2 niveles</strong>: normal + patológico (CLSI H47-A2)</li>
+            <li>Analizar cada <strong>8 horas</strong> de operación y ante cada cambio de reactivo</li>
+          </ul>
+        </div>
+        <div class="intro-card">
+          <h4>Estructura de este material</h4>
+          <ul>
+            <li>📌 <strong>Algoritmo A</strong> — Nuevo lote de <em>material de control</em></li>
+            <li>📌 <strong>Algoritmo B</strong> — Nuevo lote de <em>reactivo</em></li>
+            <li>🧮 <strong>Calculadora Sigma</strong> — Pega tu corrida y obtén σ + gráfico LJ</li>
+            <li>🔁 <strong>Calculadora de verificación</strong> — Sesgo, t-test, decisión de aceptar/rechazar</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick access cards -->
+  <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:16px;">¿Por dónde quieres empezar?</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:32px;">
+    <div onclick="showSection('s1')" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:var(--shadow);" onmouseover="this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.boxShadow='var(--shadow)'">
+      <div style="font-size:28px;margin-bottom:10px;">🔬</div>
+      <div style="font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;">Tengo un nuevo lote de control</div>
+      <div style="font-size:13px;color:var(--text-light);">Guía paso a paso: solapamiento, cálculo de media/DE, establecimiento de límites Levey-Jennings.</div>
+      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal);">→ 7 pasos · ISO 15189 · CLSI C24</div>
+    </div>
+    <div onclick="showSection('s2')" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:var(--shadow);" onmouseover="this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.boxShadow='var(--shadow)'">
+      <div style="font-size:28px;margin-bottom:10px;">⚗️</div>
+      <div style="font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;">Tengo un nuevo lote de reactivo</div>
+      <div style="font-size:13px;color:var(--text-light);">Verificación lote a lote: medición en paralelo, análisis estadístico, árbol de decisión.</div>
+      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal);">→ 8 pasos · CLSI EP26-A · ICSH 2024</div>
+    </div>
+    <div onclick="showSection('s3')" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:var(--shadow);" onmouseover="this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.boxShadow='var(--shadow)'">
+      <div style="font-size:28px;margin-bottom:10px;">📊</div>
+      <div style="font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;">Quiero calcular mi Sigma Métrica</div>
+      <div style="font-size:13px;color:var(--text-light);">Pega tu corrida de QC y obtén: media, DE, CV%, Sigma, gráfico Levey-Jennings y reglas recomendadas.</div>
+      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal);">→ Calculadora interactiva completa</div>
+    </div>
+    <div onclick="showSection('s4')" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:var(--shadow);" onmouseover="this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.boxShadow='var(--shadow)'">
+      <div style="font-size:28px;margin-bottom:10px;">🔁</div>
+      <div style="font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;">Quiero verificar un cambio de lote</div>
+      <div style="font-size:13px;color:var(--text-light);">Compara lote viejo vs. nuevo: calcula sesgo, aplica criterios de aceptación y decide con base en evidencia.</div>
+      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal);">→ Sesgo · t-test pareado · Bland-Altman</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SECCIÓN 1: NUEVO LOTE DE CONTROL ══════ -->
+<div id="s1" class="section-page">
+  <div class="page-header">
+    <div class="breadcrumb">Algoritmos · Paso a paso</div>
+    <h2>Algoritmo A: Nuevo Lote de Material de Control</h2>
+    <p class="subtitle">Guía completa para establecer nuevos valores diana y límites de control al recibir un nuevo lote de material de control interno, sin interrumpir la monitorización de la calidad.</p>
+    <div class="norm-pills">
+      <span class="norm-pill">ISO 15189:2022 §7.3</span>
+      <span class="norm-pill">CLSI C24-Ed4</span>
+      <span class="norm-pill">CLSI EP26-A</span>
+      <span class="norm-pill">ICSH 2024</span>
+      <span class="norm-pill">EFLM Var. Biológica</span>
+    </div>
+  </div>
+
+  <div class="steps-container">
+
+    <!-- PASO 1 -->
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">1</div>
+        <div class="step-title-block">
+          <div class="step-title">Planificación y recepción del nuevo lote</div>
+          <div class="step-subtitle">Antes de abrir el vial · Verificación inicial</div>
+        </div>
+        <div class="step-tags">
+          <span class="step-tag tag-iso">ISO 15189</span>
+          <span class="step-tag tag-clsi">CLSI C24</span>
+        </div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>¿Qué hacer?</h4>
+        <ul>
+          <li>Verificar que el nuevo lote de control se recibe <strong>antes de agotar el lote anterior</strong>. Se recomienda un solapamiento mínimo de <strong>20 días hábiles</strong> de margen.</li>
+          <li>Registrar: número de lote, fecha de caducidad, condiciones de almacenamiento y fecha de recepción.</li>
+          <li>Verificar la integridad del envase y las condiciones de transporte (<strong>cadena de frío</strong> si aplica).</li>
+          <li>Consultar la <strong>hoja de valores asignados del fabricante</strong> (valores diana y rangos aceptables por método/plataforma).</li>
+        </ul>
+        <h4>¿Por qué es importante este paso?</h4>
+        <p>El período de solapamiento es imprescindible para establecer los valores diana propios del laboratorio. Sin él, el laboratorio queda sin sistema de control hasta completar el proceso, lo que es una no conformidad con ISO 15189.</p>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          ISO 15189:2022, §7.3.1: "El laboratorio debe establecer y mantener un sistema de control de calidad interno para cada prueba cuantitativa." El CLSI C24-Ed4 recomienda explícitamente la planificación anticipada del cambio de lote para garantizar la continuidad.
+        </div>
+        <div class="info-box">
+          <strong>Especial coagulación (ICSH 2024):</strong> Para materiales liofilizados (habituales en coagulación), registrar siempre las condiciones de reconstitución: volumen de agua, temperatura, tiempo de disolución y período de estabilidad post-reconstitución.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 2 -->
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">2</div>
+        <div class="step-title-block">
+          <div class="step-title">Período de solapamiento — funcionamiento en paralelo</div>
+          <div class="step-subtitle">Mínimo 20 días hábiles · Ambos lotes en simultáneo</div>
+        </div>
+        <div class="step-tags">
+          <span class="step-tag tag-clsi">CLSI C24</span>
+          <span class="step-tag tag-iso">ISO 15189</span>
+          <span class="step-tag tag-icsh">ICSH 2024</span>
+        </div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>¿Qué hacer?</h4>
+        <ul>
+          <li>Durante un mínimo de <strong>20 días hábiles</strong> (o 20 determinaciones independientes), analizar el nuevo lote en paralelo con el lote antiguo, en el mismo equipo, reactivos y condiciones habituales.</li>
+          <li>Continuar aplicando las <strong>reglas de Westgard al lote antiguo</strong> para la toma de decisiones clínicas durante este período.</li>
+          <li>Registrar todos los resultados del nuevo lote en una hoja de cálculo o SIL separada.</li>
+          <li>Las 20 determinaciones deben distribuirse en <strong>días distintos</strong>, no en el mismo día, para capturar variabilidad real (distintos operadores, calibraciones, lotes de reactivo).</li>
+        </ul>
+        <h4>¿Por qué 20 días y no menos?</h4>
+        <p>Con menos de 20 puntos, la estimación de la desviación estándar es imprecisa. El CLSI C24-Ed4 demuestra estadísticamente que con N≥20 se obtiene una estimación robusta del CV% con un intervalo de confianza razonable. Usar solo 5-10 datos puede subestimar la DE real en un 30-40%.</p>
+        <div class="warning-box">
+          Si hay restricciones operativas, se acepta un mínimo de <strong>10 días</strong> como medida provisional, pero los límites de control deben revisarse al completar los 20 datos. Documenta la justificación.
+        </div>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          CLSI C24-Ed4: Tabla 1 — Requisitos estadísticos para establecimiento de valores diana de materiales de control. ICSH 2024 (coagulación): recomienda ≥10 días con un mínimo operativo para laboratorios con menor volumen.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 3 -->
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">3</div>
+        <div class="step-title-block">
+          <div class="step-title">Cálculo de la media y desviación estándar provisionales</div>
+          <div class="step-subtitle">Estadística básica · Media, DE, CV%</div>
+        </div>
+        <div class="step-tags">
+          <span class="step-tag tag-clsi">CLSI C24</span>
+          <span class="step-tag tag-why">Estadística</span>
+        </div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>Fórmulas fundamentales</h4>
+        <div class="formula-box">
+          <div class="formula-text">Media (X̄) = Σxᵢ / n</div>
+          <div class="formula-caption">Suma de todos los valores dividida entre el número de datos</div>
+        </div>
+        <div class="formula-box">
+          <div class="formula-text">DE = √[Σ(xᵢ − X̄)² / (n−1)]</div>
+          <div class="formula-caption">Desviación estándar muestral (denominador n−1, no n)</div>
+        </div>
+        <div class="formula-box">
+          <div class="formula-text">CV% = (DE / X̄) × 100</div>
+          <div class="formula-caption">Coeficiente de variación — expresa la imprecisión en porcentaje relativo</div>
+        </div>
+
+        <h4>Detección de valores atípicos (outliers)</h4>
+        <p>Antes del cálculo definitivo, eliminar valores atípicos mediante:</p>
+        <ul>
+          <li><strong>Test de Grubbs:</strong> Calcula G = |xᵢ − X̄| / DE. Si G supera el valor crítico de la tabla de Grubbs para N datos, el valor es un outlier.</li>
+          <li><strong>Regla práctica CLSI:</strong> Valores fuera de X̄ ± 3DE con causa asignable confirmada pueden excluirse, documentando la justificación.</li>
+        </ul>
+        <div class="warning-box">
+          ¿El resultado fuera de rango tiene causa conocida (error de preparación, vial mal reconstituido, operador nuevo, mantenimiento)? → Excluir con documentación. ¿Sin causa identificable? → Incluir en el cálculo, es variabilidad real del sistema.
+        </div>
+        <div class="info-box">
+          <strong>💡 Usa la Calculadora integrada</strong> de esta guía (sección Sigma + LJ) para pegar tus datos y obtener automáticamente media, DE, CV% y detección de outliers.
+        </div>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          CLSI C24-Ed4, sección 5: "Statistical Considerations for Establishing Target Values". El denominador (n−1) —estadística de Bessel— es obligatorio para estimaciones muestrales; usar n sobreestimaría la precisión.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 4 -->
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">4</div>
+        <div class="step-title-block">
+          <div class="step-title">Evaluación de la aceptabilidad de los valores obtenidos</div>
+          <div class="step-subtitle">Comparación con fabricante y lote anterior · TEa</div>
+        </div>
+        <div class="step-tags">
+          <span class="step-tag tag-eflm">EFLM</span>
+          <span class="step-tag tag-iso">ISO 15189</span>
+          <span class="step-tag tag-icsh">ICSH</span>
+        </div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>¿Qué debo comparar?</h4>
+        <table class="data-table">
+          <thead><tr><th>Lo que comparo</th><th>Con qué lo comparo</th><th>Criterio de aceptación</th></tr></thead>
+          <tbody>
+            <tr><td>Media provisional (5–10 días)</td><td>Rango del fabricante</td><td>¿Es plausible? Orientación inicial solamente</td></tr>
+            <tr><td>Media definitiva (≥20 días)</td><td>Media del lote anterior</td><td>Diferencia &lt; TEa del analito</td></tr>
+            <tr><td>CV% del nuevo lote</td><td>CV% histórico del laboratorio</td><td>Debe ser ≤ al CV anterior</td></tr>
+            <tr><td>Valores individuales</td><td>Límites ±2s / ±3s de la media propia</td><td>Aplicar reglas de Westgard</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Jerarquía para definir el TEa (de mayor a menor prioridad)</h4>
+        <ol>
+          <li><strong>Impacto clínico:</strong> ¿Un cambio de X% alteraría la decisión clínica? (ej. INR 2.0 vs 2.2 en anticoagulación)</li>
+          <li><strong>Variabilidad biológica EFLM:</strong> TEa = |Sesgo deseable| + 1.65 × CV deseable. Base de datos: <code>biologicalvariation.eu</code></li>
+          <li><strong>Recomendaciones ICSH 2024</strong> (coagulación): criterios específicos por analito (ver tabla abajo)</li>
+          <li><strong>Programa de ECA/PEEC</strong> al que participa el laboratorio</li>
+          <li><strong>Estado del arte:</strong> CV histórico × 3 (límite pragmático)</li>
+        </ol>
+
+        <div class="coag-table-wrap">
+        <table class="data-table" style="margin-top:14px">
+          <thead><tr><th>Prueba coagulación</th><th>Criterio de aceptación ICSH 2024</th><th>Acción si se supera</th></tr></thead>
+          <tbody>
+            <tr class="highlight-row"><td><strong>TP / INR</strong></td><td>Diferencia &lt;15%; r&gt;0.95; pendiente 0.90–1.10</td><td>Verificar ISI y MNPT con ≥20 plasmas normales</td></tr>
+            <tr><td><strong>TTPA</strong></td><td>Diferencia &lt;15%; evaluar sensibilidad a heparina</td><td>Evaluar nuevos puntos de corte terapéuticos</td></tr>
+            <tr><td><strong>Fibrinógeno</strong></td><td>TEa basado en variabilidad biológica; CV ≤8%</td><td>Verificar linealidad; recalibrar</td></tr>
+            <tr><td><strong>Factores VIII, IX…</strong></td><td>CV ≤10% inter-ensayo; sesgo ≤ TEa local</td><td>Generar nueva curva de calibración</td></tr>
+            <tr><td><strong>Dímero-D</strong></td><td>Criterio clínico: punto de corte diagnóstico</td><td>Validar sensibilidad diagnóstica antes de cambio</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="warning-box">
+          El rango del fabricante NO es el TEa. Es una referencia provisional de plausibilidad. Los criterios definitivos de aceptación siempre deben basarse en el TEa derivado de variabilidad biológica o impacto clínico.
+        </div>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          EFLM: <code>biologicalvariation.eu</code> · ICSH 2024 "New Lot Verification of Coagulation Reagents, Calibrators and Controls" · CLSI C24-Ed4 §6 "Acceptance Criteria"
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 5 -->
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">5</div>
+        <div class="step-title-block">
+          <div class="step-title">Establecimiento de los nuevos límites de control</div>
+          <div class="step-subtitle">Gráfico Levey-Jennings · Reglas de Westgard · Sigma Métrica</div>
+        </div>
+        <div class="step-tags">
+          <span class="step-tag tag-clsi">CLSI C24</span>
+          <span class="step-tag tag-eflm">Westgard</span>
+        </div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>Construcción del gráfico de Levey-Jennings</h4>
+        <ul>
+          <li><strong>Línea central</strong> = media calculada del nuevo lote (X̄)</li>
+          <li><strong>Límites de aviso</strong> = X̄ ± 2 DE (regla 1₂ₛ — atención, no rechazo inmediato)</li>
+          <li><strong>Límites de rechazo/acción</strong> = X̄ ± 3 DE (regla 1₃ₛ — rechazo de corrida)</li>
+        </ul>
+
+        <h4>Reglas de Westgard según Sigma Métrica</h4>
+        <table class="data-table">
+          <thead><tr><th>Sigma (σ)</th><th>Nivel de calidad</th><th>Reglas a aplicar</th><th>N controles/corrida</th><th>Tamaño de lote máx.</th></tr></thead>
+          <tbody>
+            <tr><td>≥ 6σ</td><td>🏆 World class</td><td><code>1₃ₛ</code></td><td>2</td><td>~1000 pacientes</td></tr>
+            <tr><td>5–6σ</td><td>🟦 Excelente</td><td><code>1₃ₛ / 2₂ₛ</code></td><td>2</td><td>~450 pacientes</td></tr>
+            <tr><td>4–5σ</td><td>🟩 Bueno</td><td><code>1₃ₛ / 2₂ₛ / R₄ₛ</code></td><td>4</td><td>~200 pacientes</td></tr>
+            <tr><td>3–4σ</td><td>🟨 Marginal</td><td><code>1₃ₛ / 2₂ₛ / R₄ₛ / 4₁ₛ</code></td><td>4–6</td><td>~45 pacientes</td></tr>
+            <tr><td>&lt; 3σ</td><td>🔴 Inaceptable</td><td colspan="3">No controlar: mejorar el método antes de continuar</td></tr>
+          </tbody>
+        </table>
+
+        <div class="info-box">
+          <strong>¿No sabes tu Sigma?</strong> Usa la <a onclick="showSection('s3')" style="color:var(--teal);cursor:pointer;font-weight:600;">Calculadora de Sigma Métrica</a> de esta guía. Solo necesitas tu TEa, sesgo y CV%.
+        </div>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          Westgard JO et al. "Practical Application of Sigma Metrics QC Procedures in Clinical Chemistry." Clin Chem Lab Med 2011;49(11):1837–43. · CLSI C24-Ed4 Table 3: Westgard Sigma Rule Selection.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 6 -->
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">6</div>
+        <div class="step-title-block">
+          <div class="step-title">Transición al nuevo lote</div>
+          <div class="step-subtitle">Activación en SIL · Documentación · Retiro del lote antiguo</div>
+        </div>
+        <div class="step-tags">
+          <span class="step-tag tag-iso">ISO 15189</span>
+        </div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>Lista de verificación para la transición</h4>
+        <ul>
+          <li>✅ Nuevos límites de control establecidos y verificados</li>
+          <li>✅ Media y DE definitivas calculadas con ≥20 determinaciones</li>
+          <li>✅ Media del nuevo lote dentro del TEa respecto al lote anterior</li>
+          <li>✅ CV% del nuevo lote ≤ CV% del lote anterior</li>
+          <li>✅ Gráfico de Levey-Jennings configurado en SIL con nueva línea central y límites</li>
+          <li>✅ Reglas de Westgard apropiadas activadas según Sigma del analito</li>
+          <li>✅ Lote antiguo retirado de la rutina y correctamente desechado o almacenado</li>
+          <li>✅ Fecha de cambio, nuevos valores diana y DE registrados en el sistema de registros de CCI</li>
+          <li>✅ Firma del facultativo responsable de calidad</li>
+        </ul>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          ISO 15189:2022, §7.3.2: "Los registros del control de calidad interno deben estar disponibles para el personal del laboratorio y conservarse según la política de gestión de registros del laboratorio." Legislación española: mínimo 5 años (RD 1277/2003). Latinoamérica: consultar normativa local (generalmente 5–10 años).
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 7 -->
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">7</div>
+        <div class="step-title-block">
+          <div class="step-title">Monitorización post-cambio</div>
+          <div class="step-subtitle">Primeros 10 días · Vigilancia reforzada · Recálculo mensual</div>
+        </div>
+        <div class="step-tags">
+          <span class="step-tag tag-clsi">CLSI C24</span>
+          <span class="step-tag tag-iso">ISO 15189</span>
+        </div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>¿Qué vigilar en los primeros días?</h4>
+        <ul>
+          <li>Verificar que no se activan reglas de Westgard de forma sistemática (especialmente <strong>10ₓ</strong> — deriva, y <strong>2₂ₛ</strong> — sesgo).</li>
+          <li>Comparar resultados de pacientes con valores previos del mismo paciente (<strong>delta check</strong>) si están disponibles.</li>
+          <li>Recalcular media y DE acumulativas <strong>mensualmente</strong> durante los primeros 3 meses y ajustar límites si es necesario.</li>
+        </ul>
+        <h4>Cuándo recalcular la Sigma Métrica</h4>
+        <ul>
+          <li>Al completar los primeros 6 meses con el nuevo lote</li>
+          <li>Tras cada participación en el programa de ECA/PEEC (actualizar sesgo)</li>
+          <li>Ante cambios en la plataforma analítica o en el lote de reactivo</li>
+        </ul>
+        <div class="info-box">
+          <strong>Coagulación:</strong> Para TP/INR, vigilar la concordancia de los valores de pacientes anticoagulados con el INR terapéutico objetivo. Una deriva del 0.2 unidades de INR puede tener impacto clínico significativo.
+        </div>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          Westgard JO, Bayat H, Westgard SA. "Planning Risk-Based SQC Schedules for Bracketed Operation of Continuous Production Analyzers." Clin Chem 2018;64(2):289–96.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+</div>
+
+<!-- ══════ SECCIÓN 2: NUEVO LOTE DE REACTIVO ══════ -->
+<div id="s2" class="section-page">
+  <div class="page-header">
+    <div class="breadcrumb">Algoritmos · Paso a paso</div>
+    <h2>Algoritmo B: Nuevo Lote de Reactivo</h2>
+    <p class="subtitle">El cambio de lote de reactivo es una fuente reconocida de sesgo analítico. La verificación lote a lote es un requisito de la ISO 15189 y del CLSI EP26-A para garantizar la continuidad de la calidad analítica.</p>
+    <div class="norm-pills">
+      <span class="norm-pill">CLSI EP26-A</span>
+      <span class="norm-pill">ISO 15189:2022 §7.3</span>
+      <span class="norm-pill">ICSH 2024</span>
+      <span class="norm-pill">EFLM TEa</span>
+    </div>
+  </div>
+
+  <!-- Árbol de decisión -->
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;box-shadow:var(--shadow);">
+    <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;">🌲 Árbol de decisión rápido</h3>
+    <div class="decision-tree">
+      <div class="dt-node">
+        <div class="dt-diamond"></div>
+        <div class="dt-text">¿El sesgo observado entre lote nuevo y lote anterior supera el <strong>límite de rechazo</strong> (0.6 × DC)?</div>
+      </div>
+      <div class="dt-indent">
+        <div style="margin:4px 0;color:var(--green);font-weight:600;">✗ NO → <span class="dt-action accept">✔ Aceptar el nuevo lote</span> — documentar y poner en uso</div>
+        <div style="margin:8px 0;color:var(--red);font-weight:600;">✓ SÍ → Continuar evaluando ▾</div>
+        <div class="dt-node" style="padding-left:16px;">
+          <div class="dt-diamond" style="background:var(--navy-light);"></div>
+          <div class="dt-text">¿Existe causa técnica identificable (calibración, temperatura, estabilidad del reactivo)?</div>
+        </div>
+        <div style="padding-left:54px;">
+          <div style="margin:4px 0;color:var(--green);font-weight:600;">✓ SÍ → <span class="dt-action investigate">🔍 Corregir causa y re-evaluar</span></div>
+          <div style="margin:4px 0;color:var(--red);font-weight:600;">✗ NO → <span class="dt-action reject">✗ Rechazar el lote</span> — Contactar al fabricante · Documentar no conformidad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="steps-container">
+
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">1</div>
+        <div class="step-title-block">
+          <div class="step-title">Planificación y recepción del nuevo lote de reactivo</div>
+          <div class="step-subtitle">Antes de poner en uso clínico · Verificación de integridad</div>
+        </div>
+        <div class="step-tags"><span class="step-tag tag-iso">ISO 15189</span><span class="step-tag tag-clsi">EP26-A</span></div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Recibir el nuevo lote <strong>antes de agotar el lote actual</strong> (margen mínimo de 1–2 semanas).</li>
+          <li>Registrar: número de lote, fecha de caducidad, condiciones de almacenamiento y fecha de recepción.</li>
+          <li>Verificar integridad del envase y condiciones de transporte.</li>
+          <li><strong>No poner en uso clínico</strong> hasta completar la verificación.</li>
+        </ul>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          CLSI EP26-A "User Evaluation of Acceptability of a Reagent Lot Change" (rev. 2022): §4 "Pre-Study Requirements". ISO 15189:2022 §6.4.3: "El laboratorio debe verificar los reactivos antes de su uso clínico."
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">2</div>
+        <div class="step-title-block">
+          <div class="step-title">Definir los criterios de aceptación ANTES de medir</div>
+          <div class="step-subtitle">TEa · DC · Límite de rechazo — Definir primero, medir después</div>
+        </div>
+        <div class="step-tags"><span class="step-tag tag-eflm">EFLM</span><span class="step-tag tag-clsi">EP26-A</span><span class="step-tag tag-why">⚡ CRÍTICO</span></div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>¿Por qué definir los criterios ANTES de medir?</h4>
+        <p>Definir los criterios de aceptación después de ver los resultados introduce sesgo cognitivo ("post-hoc threshold setting"). El CLSI EP26-A exige que los criterios se establezcan antes del inicio del estudio.</p>
+
+        <h4>Pasos para establecer el criterio de aceptación</h4>
+        <ol>
+          <li><strong>Diferencia Crítica (DC):</strong> Diferencia máxima aceptable entre los dos lotes. Se expresa como porcentaje.</li>
+          <li>Derivar DC del <strong>TEa:</strong> Una regla práctica es DC ≤ 1/3 del TEa analítico (criterio EFLM para variación entre lotes).</li>
+          <li><strong>Límite de rechazo</strong> = 0.6 × DC. Esto garantiza una probabilidad de detección ≥90% con el tamaño de muestra del estudio.</li>
+        </ol>
+
+        <div class="formula-box">
+          <div class="formula-text">Límite de rechazo = 0.6 × DC = 0.6 × (1/3 × TEa) = 0.2 × TEa</div>
+          <div class="formula-caption">Fórmula recomendada CLSI EP26-A para cálculo del límite de rechazo</div>
+        </div>
+
+        <table class="data-table" style="margin-top:12px">
+          <thead><tr><th>Analito (coagulación)</th><th>TEa recomendado</th><th>DC máxima</th><th>Límite de rechazo</th></tr></thead>
+          <tbody>
+            <tr><td>TP (segundos)</td><td>15%</td><td>5%</td><td>3%</td></tr>
+            <tr><td>INR</td><td>12% (impacto clínico)</td><td>4%</td><td>2.4%</td></tr>
+            <tr><td>TTPA (segundos)</td><td>15%</td><td>5%</td><td>3%</td></tr>
+            <tr><td>Fibrinógeno</td><td>20% (var. biológica)</td><td>6.7%</td><td>4%</td></tr>
+            <tr><td>Dímero-D</td><td>25–30%</td><td>8–10%</td><td>5–6%</td></tr>
+          </tbody>
+        </table>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          van Schrojenstein Lantman M et al. "An Approach for Determining Allowable Between Reagent Lot Variation." Clin Chem Lab Med 2022;60(5):681–88. · CLSI EP26-A §6. · ICSH 2024.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">3</div>
+        <div class="step-title-block">
+          <div class="step-title">Selección y preparación de muestras</div>
+          <div class="step-subtitle">Puntos de decisión médica · Número de muestras según CLSI EP26-A</div>
+        </div>
+        <div class="step-tags"><span class="step-tag tag-clsi">EP26-A</span><span class="step-tag tag-icsh">ICSH</span></div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Seleccionar muestras de pacientes que cubran los <strong>puntos de decisión médica</strong> del analito: al menos <strong>3 niveles de concentración</strong> (bajo, normal/medio, alto/terapéutico).</li>
+          <li>Para coagulación: incluir muestras de <strong>pacientes en tratamiento</strong> (ej. en rango de anticoagulación para INR) y muestras normales.</li>
+          <li>Número de muestras según EP26-A: habitualmente <strong>3–10 muestras por nivel de decisión</strong> para la mayoría de analitos de coagulación.</li>
+          <li>Preparar alícuotas suficientes para medir con ambos lotes de reactivo <strong>el mismo día</strong>.</li>
+          <li>Las muestras deben ser estables para el analito durante el tiempo del experimento (consultar instrucciones del fabricante).</li>
+        </ul>
+        <div class="info-box">
+          <strong>Para TTPA:</strong> Incluir muestras con concentraciones terapéuticas de heparina no fraccionada (0.3–0.7 UI/mL anti-Xa) para verificar que la sensibilidad del nuevo lote es equivalente al anterior.
+        </div>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          CLSI EP26-A §7: "Sample Selection". Tao R et al. "Research and Discussion on the Evaluation Scheme of Reagent Lot-to-Lot Differences in 16 Chemiluminescence Analytes." J Clin Lab Anal 2021;35(3):e23675.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">4</div>
+        <div class="step-title-block">
+          <div class="step-title">Medición en paralelo</div>
+          <div class="step-subtitle">Lote A (actual) vs. Lote B (nuevo) · Mismo día · Mismas condiciones</div>
+        </div>
+        <div class="step-tags"><span class="step-tag tag-clsi">EP26-A</span></div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Medir las muestras seleccionadas con el <strong>lote A (actual) y lote B (nuevo)</strong>, en el mismo equipo, el mismo día y en las mismas condiciones.</li>
+          <li>Medir también los <strong>materiales de control interno</strong> (al menos 2 niveles) con ambos lotes.</li>
+          <li>El orden de medición debe ser alternado (A, B, A, B...) para evitar efectos de drift temporal.</li>
+          <li>Registrar todos los resultados en la <a onclick="showSection('s4')" style="color:var(--teal);cursor:pointer;font-weight:600;">Calculadora de Verificación de Lote</a> de esta guía.</li>
+        </ul>
+        <div class="warning-box">
+          No calibrar el nuevo lote antes de la medición paralela si no es requerido por el fabricante. Calibrar DESPUÉS de aceptar el lote si corresponde.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">5</div>
+        <div class="step-title-block">
+          <div class="step-title">Análisis estadístico de los resultados</div>
+          <div class="step-subtitle">Sesgo% · t-test pareado · Bland-Altman · Passing-Bablok</div>
+        </div>
+        <div class="step-tags"><span class="step-tag tag-clsi">EP26-A</span><span class="step-tag tag-why">Estadística</span></div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <h4>Análisis con muestras de pacientes</h4>
+        <div class="formula-box">
+          <div class="formula-text">Sesgo% = [(Media Lote B − Media Lote A) / Media Lote A] × 100</div>
+          <div class="formula-caption">Calcular por separado para cada nivel de concentración</div>
+        </div>
+        <ul>
+          <li><strong>Test t pareado:</strong> Para evaluar si la diferencia es estadísticamente significativa (p&lt;0.05).</li>
+          <li><strong>Gráfico de Bland-Altman:</strong> Representa (A+B)/2 en X y (B−A) en Y. Permite visualizar si el sesgo es constante o proporcional.</li>
+          <li><strong>Regresión Passing-Bablok</strong> (si ≥20 muestras): Evalúa sesgo proporcional (pendiente) y constante (intercepto).</li>
+        </ul>
+        <h4>Análisis con materiales de control</h4>
+        <ul>
+          <li>Verificar que los resultados del control con el nuevo lote caen dentro de los límites ±2DE del control actual.</li>
+          <li>Si la diferencia es &lt;1 DE: se puede mantener el rango diana preexistente.</li>
+          <li>Si la diferencia es ≥1 DE: considerar establecer nuevo valor diana para el control con el nuevo lote.</li>
+        </ul>
+        <div class="info-box">
+          <strong>💡 Usa la <a onclick="showSection('s4')" style="color:var(--teal);cursor:pointer;font-weight:600;">Calculadora de Verificación de Lote</a></strong> para introducir los datos de ambos lotes y obtener automáticamente el sesgo%, el resultado del t-test y la recomendación de aceptar/rechazar.
+        </div>
+        <div class="source-box">
+          <div class="src-label">📖 Fuente normativa</div>
+          Cho MC et al. "Statistical Validation of Reagent Lot Change in the Clinical Chemistry Laboratory." Ann Clin Biochem 2014;51(6):688–94. · Koh NWX et al. "Comparison of Six Regression-Based Lot-to-Lot Verification Approaches." Clin Chem Lab Med 2022;60(8):1175–85.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">6</div>
+        <div class="step-title-block">
+          <div class="step-title">Toma de decisión</div>
+          <div class="step-subtitle">Aceptar · Rechazar · Investigar</div>
+        </div>
+        <div class="step-tags"><span class="step-tag tag-clsi">EP26-A</span><span class="step-tag tag-icsh">ICSH</span></div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <table class="data-table">
+          <thead><tr><th>Resultado del análisis</th><th>Decisión</th><th>Acción</th></tr></thead>
+          <tbody>
+            <tr><td>Sesgo &lt; límite de rechazo (0.6×DC) en todos los niveles</td><td class="dt-action accept" style="display:block;margin:4px 0;">✔ Aceptar</td><td>Documentar y poner en uso; calibrar si requiere el fabricante</td></tr>
+            <tr><td>Sesgo &gt; límite de rechazo pero causa técnica identificada</td><td class="dt-action investigate" style="display:block;margin:4px 0;">🔍 Investigar</td><td>Corregir causa (recalibrar, verificar temperatura) y re-evaluar</td></tr>
+            <tr><td>Sesgo &gt; límite de rechazo sin causa identificable</td><td class="dt-action reject" style="display:block;margin:4px 0;">✗ Rechazar</td><td>Contactar al fabricante; solicitar otro lote; registrar no conformidad</td></tr>
+            <tr><td>Sesgo en un solo nivel supera el límite</td><td class="dt-action investigate" style="display:block;margin:4px 0;">🔍 Evaluar</td><td>Ampliar muestras en ese nivel antes de decidir</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">7</div>
+        <div class="step-title-block">
+          <div class="step-title">Implementación del nuevo lote (si se acepta)</div>
+          <div class="step-subtitle">Calibración · Controles · Documentación completa</div>
+        </div>
+        <div class="step-tags"><span class="step-tag tag-iso">ISO 15189</span></div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Cargar el nuevo lote de reactivo en el analizador.</li>
+          <li>Realizar <strong>calibración</strong> si el fabricante lo requiere para el cambio de lote.</li>
+          <li>Pasar los controles internos y verificar que están dentro de los límites de control.</li>
+          <li>Documentar: fecha de cambio, número de lote anterior y nuevo, resultados de la verificación, decisión tomada, <strong>firma del responsable</strong>.</li>
+        </ul>
+        <div class="info-box">
+          <strong>Coagulación especial (ICSH 2024):</strong> Para TP/INR, verificar el ISI (Índice de Sensibilidad Internacional) del nuevo lote y establecer nueva MNPT (Media Normal del Tiempo de Protrombina) con ≥20 plasmas de donantes normales antes de liberar resultados de pacientes anticoagulados.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-number">8</div>
+        <div class="step-title-block">
+          <div class="step-title">Monitorización post-cambio</div>
+          <div class="step-subtitle">5–10 días de vigilancia reforzada</div>
+        </div>
+        <div class="step-tags"><span class="step-tag tag-clsi">CLSI C24</span><span class="step-tag tag-iso">ISO 15189</span></div>
+        <div class="step-arrow">▾</div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Vigilar los gráficos de Levey-Jennings: atención especial a <strong>tendencias (10ₓ)</strong> y sesgos sistemáticos <strong>(2₂ₛ)</strong>.</li>
+          <li>Comparar resultados de pacientes con valores previos (<strong>delta check</strong>).</li>
+          <li>Si se detectan problemas, retirar el lote y volver al lote anterior si aún está disponible.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════ SECCIÓN 3: CALCULADORA SIGMA + LJ ══════ -->
+<div id="s3" class="section-page">
+  <div class="page-header">
+    <div class="breadcrumb">Calculadoras</div>
+    <h2>Calculadora: Sigma Métrica + Levey-Jennings</h2>
+    <p class="subtitle">Introduce los datos de tu corrida de control de calidad y obtén automáticamente: media, DE, CV%, Sigma Métrica, gráfico de Levey-Jennings, detección de violaciones de Westgard y recomendaciones de frecuencia y reglas de control.</p>
+  </div>
+
+  <!-- FASE 1: Datos de QC -->
+  <div class="calc-section">
+    <div class="calc-header">
+      <div class="calc-icon">📥</div>
+      <h3>Fase 1 — Datos de la corrida de QC</h3>
+    </div>
+    <div class="calc-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Analito / Prueba</label>
+          <input type="text" id="analito" placeholder="ej: TP, TTPA, Fibrinógeno, INR...">
+        </div>
+        <div class="form-group">
+          <label>Nivel del control</label>
+          <select id="nivel">
+            <option value="Normal">Normal (nivel 1)</option>
+            <option value="Patológico">Patológico (nivel 2)</option>
+            <option value="Alto">Alto (nivel 3)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>
+          Valores de la corrida de QC
+          <span class="tooltip-wrap"><span class="tooltip-trigger">?</span><span class="tooltip-box">Pega los valores directamente desde Excel (una columna). Separa con comas, punto y coma, espacios o saltos de línea. Se aceptan valores con punto o coma decimal.</span></span>
+        </label>
+        <textarea id="qc_valores" placeholder="Pega aquí los valores de tu corrida de QC.&#10;Puedes pegar desde Excel (una columna), separados por comas, punto y coma o saltos de línea.&#10;&#10;Ejemplo:&#10;13.2&#10;12.8&#10;13.5&#10;12.9&#10;13.1"></textarea>
+        <div class="help">Mínimo 10 valores recomendados. Acepta coma o punto como decimal.</div>
+      </div>
+      <div id="error_fase1" class="error-msg">Por favor introduce al menos 5 valores numéricos válidos.</div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="calcularFase1()">🧮 Calcular estadísticos</button>
+        <button class="btn-secondary" onclick="cargarEjemplo()">📋 Cargar datos de ejemplo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resultados Fase 1 -->
+  <div id="resultados_f1" class="results-panel">
+    <div class="results-grid" id="stats_grid"></div>
+
+    <!-- FASE 2: TEa y sesgo -->
+    <div class="calc-section">
+      <div class="calc-header">
+        <div class="calc-icon">🎯</div>
+        <h3>Fase 2 — TEa y Sesgo para calcular la Sigma Métrica</h3>
+      </div>
+      <div class="calc-body">
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>
+              %TEa (Error Total Admisible)
+              <span class="tooltip-wrap"><span class="tooltip-trigger">?</span><span class="tooltip-box">Error total admisible para este analito. Fuente recomendada: EFLM (biologicalvariation.eu). Ejemplos coagulación: TP=15%, TTPA=15%, Fibrinógeno=20%, INR=12%.</span></span>
+            </label>
+            <input type="number" id="tea" placeholder="ej: 15" step="0.1" min="0">
+            <div class="help">Ver tabla de valores en sección Referencias</div>
+          </div>
+          <div class="form-group">
+            <label>
+              %Sesgo (Bias)
+              <span class="tooltip-wrap"><span class="tooltip-trigger">?</span><span class="tooltip-box">Sesgo de tu laboratorio para este analito, obtenido de programas de evaluación externa (ECA/PEEC). Si no tienes ECA, usa 0 como estimación provisional.</span></span>
+            </label>
+            <input type="number" id="sesgo" placeholder="ej: 2.5" step="0.1" min="0">
+            <div class="help">De tu programa ECA: SEQCML, ACSA (Andalucía), PELAB (Cataluña), RIQAS…</div>
+          </div>
+          <div class="form-group">
+            <label>Fuente del TEa</label>
+            <select id="tea_fuente">
+              <option value="EFLM">EFLM / Variabilidad biológica (prioritaria en España)</option>
+              <option value="CLIA">CLIA 2025</option>
+              <option value="ICSH">ICSH 2024 (coagulación)</option>
+              <option value="ECA">Programa de ECA local</option>
+              <option value="Otro">Otro / Consenso expertos</option>
+            </select>
+          </div>
+        </div>
+        <div id="error_fase2" class="error-msg">Por favor introduce valores numéricos válidos para TEa y Sesgo.</div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="calcularSigma()">⚡ Calcular Sigma Métrica</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resultados Sigma -->
+  <div id="resultados_sigma" class="results-panel">
+    <div id="sigma_display"></div>
+    <div id="runsize_display"></div>
+    <div id="westgard_display"></div>
+    <div class="chart-wrapper">
+      <h4>Gráfico de Levey-Jennings</h4>
+      <div class="chart-note" id="lj_note"></div>
+      <canvas id="ljChart"></canvas>
+    </div>
+    <div id="violations_display"></div>
+  </div>
+</div>
+
+<!-- ══════ SECCIÓN 4: CALCULADORA VERIFICACIÓN LOTE ══════ -->
+<div id="s4" class="section-page">
+  <div class="page-header">
+    <div class="breadcrumb">Calculadoras</div>
+    <h2>Calculadora: Verificación de Cambio de Lote de Reactivo</h2>
+    <p class="subtitle">Introduce los resultados del lote actual (A) y del nuevo lote (B) medidos en las mismas muestras. La calculadora determina el sesgo, aplica el t-test pareado y emite una recomendación de aceptar o rechazar según el criterio definido (CLSI EP26-A).</p>
+  </div>
+
+  <div class="calc-section">
+    <div class="calc-header">
+      <div class="calc-icon">⚗️</div>
+      <h3>Datos de medición paralela — Lote A vs. Lote B</h3>
+    </div>
+    <div class="calc-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Analito</label>
+          <input type="text" id="v_analito" placeholder="ej: TP segundos, INR, Fibrinógeno...">
+        </div>
+        <div class="form-group">
+          <label>%TEa (criterio de aceptación)</label>
+          <input type="number" id="v_tea" placeholder="ej: 15" step="0.1">
+          <div class="help">Límite de rechazo = 0.6 × (1/3 × TEa) = 0.2 × TEa</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Resultados Lote A (actual)</label>
+          <textarea id="v_loteA" placeholder="Pega los valores del lote actual.&#10;Un valor por línea o separados por comas.&#10;&#10;Ejemplo:&#10;13.2&#10;14.5&#10;11.8&#10;16.2&#10;12.9" style="min-height:100px;"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Resultados Lote B (nuevo)</label>
+          <textarea id="v_loteB" placeholder="Pega los valores del nuevo lote.&#10;Mismo orden que los del Lote A (mismas muestras).&#10;&#10;Ejemplo:&#10;13.5&#10;14.8&#10;12.1&#10;16.5&#10;13.2" style="min-height:100px;"></textarea>
+        </div>
+      </div>
+      <div id="error_veri" class="error-msg">Error en los datos. Verifica que ambas columnas tienen el mismo número de valores numéricos (mínimo 3).</div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="calcularVerificacion()">🔬 Analizar cambio de lote</button>
+        <button class="btn-secondary" onclick="cargarEjemploVeri()">📋 Cargar ejemplo (TP)</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="resultados_veri" class="results-panel">
+    <div id="veri_decision"></div>
+    <div id="veri_stats"></div>
+    <div class="chart-wrapper" id="veri_chart_wrapper">
+      <h4>Gráfico de Bland-Altman</h4>
+      <div class="chart-note">Eje X: Media de Lote A y B · Eje Y: Diferencia (B − A). Los puntos fuera de los límites de acuerdo (±1.96 DE) indican posibles problemas.</div>
+      <canvas id="baChart" style="max-height:280px;"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SECCIÓN 5: REFERENCIAS ══════ -->
+<div id="s5" class="section-page">
+  <div class="page-header">
+    <div class="breadcrumb">Recursos</div>
+    <h2>Normativa y Referencias</h2>
+    <p class="subtitle">Todas las fuentes citadas en esta guía, con notas sobre aplicabilidad regional (España vs. Latinoamérica).</p>
+  </div>
+
+  <div class="region-note">
+    <span style="font-size:20px;">🇪🇸</span>
+    <div><strong>Enfoque principal: España.</strong> Esta guía sigue la jerarquía normativa española: ISO 15189:2022 (acreditación ENAC) + SEQCML + RD 1277/2003. Los documentos CLSI son de referencia internacional complementaria. Para <strong>Latinoamérica</strong>, las bases son las mismas (ISO 15189 + CLSI), con referentes nacionales: ISP Chile, IGTM Colombia, INASA Paraguay, AEFA. Las diferencias relevantes se señalan en cada sección.</div>
+  </div>
+
+  <div class="ref-grid">
+    <div class="ref-item">
+      <div class="ref-num">1</div>
+      <div class="ref-content">
+        <div class="ref-title">ISO 15189:2022 — Medical laboratories: Requirements for quality and competence</div>
+        <div class="ref-body">Norma internacional de acreditación de laboratorios clínicos. Sección 7.3 cubre el control de calidad interno. Obligatoria para acreditación ENAC (España) y organismos equivalentes en Latinoamérica. Disponible en: <a href="https://www.iso.org/standard/76677.html" target="_blank">iso.org/standard/76677.html</a></div>
+        <div class="ref-tags"><span class="step-tag tag-iso">ISO</span><span class="step-tag tag-why">Internacional</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">2</div>
+      <div class="ref-content">
+        <div class="ref-title">CLSI C24-Ed4 — Statistical Quality Control for Quantitative Measurement Procedures (4ª ed.)</div>
+        <div class="ref-body">Documento de referencia para el diseño estadístico del CCI, reglas de Westgard, establecimiento de valores diana y Sigma Métrica. Disponible en: <a href="https://clsi.org/standards/products/method-evaluation/documents/c24/" target="_blank">clsi.org</a></div>
+        <div class="ref-tags"><span class="step-tag tag-clsi">CLSI</span><span class="step-tag tag-why">Internacional</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">3</div>
+      <div class="ref-content">
+        <div class="ref-title">CLSI EP26-A — User Evaluation of Acceptability of a Reagent Lot Change (rev. 2022)</div>
+        <div class="ref-body">Protocolo estándar para la verificación de cambio de lote de reactivo. Define criterios de aceptación, tamaño muestral y análisis estadístico. Disponible en: <a href="https://clsi.org" target="_blank">clsi.org</a></div>
+        <div class="ref-tags"><span class="step-tag tag-clsi">CLSI</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">4</div>
+      <div class="ref-content">
+        <div class="ref-title">ICSH 2024 — New Lot Verification of Coagulation Reagents, Calibrators and Controls</div>
+        <div class="ref-body">Guía específica del International Council for Standardization in Haematology para la verificación de lotes en pruebas de coagulación. Cubre TP/INR, TTPA, fibrinógeno y factores.</div>
+        <div class="ref-tags"><span class="step-tag tag-icsh">ICSH</span><span class="step-tag tag-why">Coagulación</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">5</div>
+      <div class="ref-content">
+        <div class="ref-title">EFLM — Base de datos de variabilidad biológica</div>
+        <div class="ref-body">Repositorio actualizado de CVi, CVg y TEa deseable basados en variabilidad biológica para todos los analitos. Fuente primaria para establecer TEa. Disponible en: <a href="https://biologicalvariation.eu" target="_blank">biologicalvariation.eu</a></div>
+        <div class="ref-tags"><span class="step-tag tag-eflm">EFLM</span><span class="step-tag tag-why">TEa</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">6</div>
+      <div class="ref-content">
+        <div class="ref-title">Westgard JO et al. — "Practical Application of Sigma Metrics QC Procedures in Clinical Chemistry"</div>
+        <div class="ref-body">Schoenmakers CH et al. Clin Chem Lab Med 2011;49(11):1837–43. Artículo fundacional para la aplicación práctica de la Sigma Métrica en el diseño de estrategias de CCI.</div>
+        <div class="ref-tags"><span class="step-tag tag-why">Sigma</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">7</div>
+      <div class="ref-content">
+        <div class="ref-title">Song Z et al. — "Practical Application of European Biological Variation Combined With Westgard Sigma Rules in Internal Quality Control"</div>
+        <div class="ref-body">Clin Chem Lab Med 2022;60(11):1729–35. Integración de variabilidad biológica EFLM con reglas Westgard para diseño de CCI.</div>
+        <div class="ref-tags"><span class="step-tag tag-eflm">EFLM</span><span class="step-tag tag-why">Sigma</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">8</div>
+      <div class="ref-content">
+        <div class="ref-title">van Schrojenstein Lantman M et al. — "An Approach for Determining Allowable Between Reagent Lot Variation"</div>
+        <div class="ref-body">Clin Chem Lab Med 2022;60(5):681–88. Define el criterio DC = 1/3 del TEa y límite de rechazo = 0.6×DC para verificación de lotes.</div>
+        <div class="ref-tags"><span class="step-tag tag-clsi">EP26-A</span><span class="step-tag tag-why">Lote reactivo</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">9</div>
+      <div class="ref-content">
+        <div class="ref-title">SEQCML — Sociedad Española de Bioquímica Clínica y Patología Molecular</div>
+        <div class="ref-body">Documentos de consenso y guías de práctica en control de calidad para laboratorios españoles. Referencia primaria para requisitos regulatorios en España. Disponible en: <a href="https://www.seqcml.es" target="_blank">seqcml.es</a></div>
+        <div class="ref-tags"><span class="step-tag tag-iso">España</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">10</div>
+      <div class="ref-content">
+        <div class="ref-title">ISP Chile — Guía Técnica: Control de Calidad en Mediciones Cuantitativas</div>
+        <div class="ref-body">Documento oficial del Instituto de Salud Pública de Chile. Guía práctica en español sobre reglas de Westgard, gráficos Levey-Jennings y calculadoras de Sigma Métrica. Referencia principal para Latinoamérica.</div>
+        <div class="ref-tags"><span class="step-tag tag-iso">Latinoamérica</span></div>
+      </div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">11</div>
+      <div class="ref-content">
+        <div class="ref-title">Westgard JO, Bayat H, Westgard SA — "Planning Risk-Based SQC Schedules"</div>
+        <div class="ref-body">Clin Chem 2018;64(2):289–96. Metodología para determinar tamaño de lote analítico y frecuencia de control basados en riesgo para el paciente y Sigma Métrica.</div>
+        <div class="ref-tags"><span class="step-tag tag-why">Frecuencia QC</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SECCIÓN 6: TABLAS DE REFERENCIA ══════ -->
+<div id="s6" class="section-page">
+  <div class="page-header">
+    <div class="breadcrumb">Recursos</div>
+    <h2>Tablas de Referencia Rápida</h2>
+    <p class="subtitle">TEa, reglas de Westgard, frecuencia de control y valores de referencia para pruebas de coagulación y hematología.</p>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">TEa recomendado por analito — Hematología y Coagulación</h3>
+  <div style="overflow-x:auto;margin-bottom:28px;">
+  <table class="data-table">
+    <thead><tr><th>Analito</th><th>TEa (EFLM deseable)</th><th>TEa (CLIA / programa ECA)</th><th>TEa (ICSH / impacto clínico)</th><th>Fuente prioritaria</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hemoglobina (Hb)</strong></td><td>9.5%</td><td>±7% o ±1.0 g/dL</td><td>—</td><td>EFLM</td></tr>
+      <tr><td><strong>Hematocrito (Hcto)</strong></td><td>8.9%</td><td>±6% del valor</td><td>—</td><td>EFLM</td></tr>
+      <tr><td><strong>Leucocitos (WBC)</strong></td><td>22.3%</td><td>±15%</td><td>—</td><td>EFLM</td></tr>
+      <tr><td><strong>Plaquetas</strong></td><td>25%</td><td>±25%</td><td>Punto corte 50×10⁹/L</td><td>EFLM / clínico</td></tr>
+      <tr><td><strong>TP (segundos)</strong></td><td>15%</td><td>±15%</td><td>&lt;15% diferencia entre lotes</td><td>EFLM / ICSH</td></tr>
+      <tr><td><strong>INR</strong></td><td>—</td><td>—</td><td>12% (rango terapéutico)</td><td>ICSH / clínico</td></tr>
+      <tr><td><strong>TTPA (segundos)</strong></td><td>15%</td><td>±15%</td><td>&lt;15% diferencia entre lotes</td><td>EFLM / ICSH</td></tr>
+      <tr><td><strong>Fibrinógeno</strong></td><td>20.5%</td><td>±20%</td><td>Var. biológica alta</td><td>EFLM</td></tr>
+      <tr><td><strong>Dímero-D</strong></td><td>~30%</td><td>Variable por método</td><td>Sensibilidad diagnóstica</td><td>Clínico</td></tr>
+      <tr><td><strong>Factor VIII</strong></td><td>~20%</td><td>Variable</td><td>Nivel terapéutico</td><td>ICSH</td></tr>
+      <tr><td><strong>Antitrombina III</strong></td><td>~12%</td><td>Variable</td><td>—</td><td>EFLM</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">Sigma Métrica → Estrategia de control recomendada</h3>
+  <div style="overflow-x:auto;margin-bottom:28px;">
+  <table class="data-table">
+    <thead><tr><th>Sigma (σ)</th><th>Calidad del método</th><th>Reglas de Westgard</th><th>N controles/corrida</th><th>R corridas</th><th>Tamaño máx. de lote</th><th>Acción</th></tr></thead>
+    <tbody>
+      <tr style="background:#ecfdf5"><td>≥ 6σ</td><td>🏆 World class</td><td><code>1₃ₛ</code></td><td>2</td><td>1</td><td>~1000</td><td>Monitorización mínima</td></tr>
+      <tr style="background:#eff6ff"><td>5–6σ</td><td>🟦 Excelente</td><td><code>1₃ₛ / 2₂ₛ</code></td><td>2</td><td>1</td><td>~450</td><td>Control estándar</td></tr>
+      <tr style="background:#f0fdf4"><td>4–5σ</td><td>🟩 Bueno</td><td><code>1₃ₛ / 2₂ₛ / R₄ₛ</code></td><td>4</td><td>1</td><td>~200</td><td>Reforzar monitorización</td></tr>
+      <tr style="background:#fffbeb"><td>3–4σ</td><td>🟨 Marginal</td><td><code>1₃ₛ / 2₂ₛ / R₄ₛ / 4₁ₛ</code></td><td>4–6</td><td>2</td><td>~45</td><td>Mejorar método; CCI intensivo</td></tr>
+      <tr style="background:#fef2f2"><td>&lt; 3σ</td><td>🔴 Inaceptable</td><td colspan="4">—</td><td>—</td><td>No reportar. Mejorar método.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">Reglas de Westgard — Referencia completa</h3>
+  <div style="overflow-x:auto;">
+  <table class="data-table">
+    <thead><tr><th>Regla</th><th>Criterio de activación</th><th>Tipo de error que detecta</th><th>Acción recomendada</th></tr></thead>
+    <tbody>
+      <tr><td><code>1₂ₛ</code></td><td>1 valor supera X̄ ± 2DE</td><td>Advertencia — error aleatorio menor</td><td>Revisar. No rechazar automáticamente. Vigilar siguiente punto.</td></tr>
+      <tr><td><code>1₃ₛ</code></td><td>1 valor supera X̄ ± 3DE</td><td>Error aleatorio significativo</td><td>Rechazar la corrida. Investigar causa.</td></tr>
+      <tr><td><code>2₂ₛ</code></td><td>2 valores consecutivos en el mismo lado de ±2DE</td><td>Error sistemático (sesgo)</td><td>Rechazar la corrida. Probable deriva o calibración.</td></tr>
+      <tr><td><code>R₄ₛ</code></td><td>Rango entre 2 valores consecutivos &gt; 4DE</td><td>Error aleatorio entre mediciones</td><td>Rechazar la corrida. Probable interferencia o problema de muestra.</td></tr>
+      <tr><td><code>4₁ₛ</code></td><td>4 valores consecutivos en el mismo lado de ±1DE</td><td>Tendencia sistemática incipiente</td><td>Rechazar la corrida. Verificar calibración, reactivos, temperatura.</td></tr>
+      <tr><td><code>10ₓ</code></td><td>10 valores consecutivos en el mismo lado de la media</td><td>Desviación sistemática acumulada</td><td>Rechazar la corrida. Cambio de calibración o lote de reactivo.</td></tr>
+      <tr><td><code>7T</code></td><td>7 valores con tendencia creciente o decreciente continua</td><td>Deriva progresiva</td><td>Rechazar la corrida. Degradación de reactivo o material de control.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ─── NAVIGATION ───
+function showSection(id) {
+  document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['s0','s1','s2','s3','s4','s5','s6'].indexOf(id);
+  document.querySelectorAll('.nav-item')[idx]?.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ─── ACCORDION ───
+function toggleStep(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+function toggleIntro(toggle) {
+  const body = toggle.nextElementSibling;
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ─── PARSE VALUES ───
+function parseValues(raw) {
+  return raw
+    .replace(/,(?=\s*[\d\-])/g, '\n')
+    .replace(/;/g, '\n')
+    .split(/[\n\r\t ]+/)
+    .map(v => parseFloat(v.replace(',', '.')))
+    .filter(v => !isNaN(v) && isFinite(v));
+}
+
+// ─── ESTADÍSTICOS BÁSICOS ───
+function stats(arr) {
+  const n = arr.length;
+  const mean = arr.reduce((a,b)=>a+b,0)/n;
+  const variance = arr.reduce((s,v)=>s+Math.pow(v-mean,2),0)/(n-1);
+  const sd = Math.sqrt(variance);
+  const cv = (sd/mean)*100;
+  const min = Math.min(...arr);
+  const max = Math.max(...arr);
+  return { n, mean, sd, cv, min, max };
+}
+
+// ─── GRUBBS OUTLIER TEST ───
+function detectOutliers(arr, mean, sd) {
+  return arr.map((v,i) => ({
+    idx: i+1,
+    val: v,
+    G: Math.abs(v-mean)/sd,
+    isOutlier: Math.abs(v-mean)/sd > 3
+  })).filter(x=>x.isOutlier);
+}
+
+// ─── WESTGARD VIOLATIONS ───
+function checkWestgard(arr, mean, sd) {
+  const violations = [];
+  for(let i=0;i<arr.length;i++){
+    const v = arr[i];
+    const z = (v-mean)/sd;
+    if(Math.abs(z)>3) violations.push({rule:'1₃ₛ',idx:i+1,val:v,type:'reject',msg:`Valor ${v.toFixed(2)} supera ±3DE`});
+    if(i>0){
+      const zp = (arr[i-1]-mean)/sd;
+      if(z>2&&zp>2) violations.push({rule:'2₂ₛ',idx:i+1,val:v,type:'reject',msg:`Valores ${i} y ${i+1} superan +2DE consecutivamente`});
+      if(z<-2&&zp<-2) violations.push({rule:'2₂ₛ',idx:i+1,val:v,type:'reject',msg:`Valores ${i} y ${i+1} superan −2DE consecutivamente`});
+      if(Math.abs(z - zp)*sd > 4*sd) violations.push({rule:'R₄ₛ',idx:i+1,val:v,type:'reject',msg:`Rango entre valores ${i} y ${i+1} supera 4DE`});
+    }
+    if(i>=3){
+      const last4 = arr.slice(i-3,i+1).map(x=>(x-mean)/sd);
+      if(last4.every(z=>z>1)) violations.push({rule:'4₁ₛ',idx:i+1,val:v,type:'reject',msg:`4 valores consecutivos por encima de +1DE`});
+      if(last4.every(z=>z<-1)) violations.push({rule:'4₁ₛ',idx:i+1,val:v,type:'reject',msg:`4 valores consecutivos por debajo de −1DE`});
+    }
+    if(i>=9){
+      const last10 = arr.slice(i-9,i+1).map(x=>(x-mean)/sd);
+      if(last10.every(z=>z>0)) violations.push({rule:'10ₓ',idx:i+1,val:v,type:'reject',msg:`10 valores consecutivos por encima de la media`});
+      if(last10.every(z=>z<0)) violations.push({rule:'10ₓ',idx:i+1,val:v,type:'reject',msg:`10 valores consecutivos por debajo de la media`});
+    }
+  }
+  // 1₂ₛ warnings
+  for(let i=0;i<arr.length;i++){
+    const z = Math.abs((arr[i]-mean)/sd);
+    if(z>2&&z<=3) violations.push({rule:'1₂ₛ',idx:i+1,val:arr[i],type:'warn',msg:`Advertencia: valor ${arr[i].toFixed(2)} entre ±2DE y ±3DE`});
+  }
+  // Deduplicate
+  const seen = new Set();
+  return violations.filter(v=>{
+    const key = v.rule+v.idx;
+    if(seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+// ─── SIGMA CONFIG ───
+function getSigmaConfig(sigma) {
+  if(sigma>=6) return { cls:'sigma-world', label:'World Class (≥6σ)', desc:'Calidad de clase mundial. Método con excelente desempeño analítico.', rules:['1₃ₛ'], N:2, R:1, lote:1000 };
+  if(sigma>=5) return { cls:'sigma-excellent', label:'Excelente (5–6σ)', desc:'Método de alto desempeño. Control estándar con mínima intervención.', rules:['1₃ₛ','2₂ₛ'], N:2, R:1, lote:450 };
+  if(sigma>=4) return { cls:'sigma-good', label:'Bueno (4–5σ)', desc:'Buen desempeño. Monitorización reforzada con múltiples reglas.', rules:['1₃ₛ','2₂ₛ','R₄ₛ'], N:4, R:1, lote:200 };
+  if(sigma>=3) return { cls:'sigma-marginal', label:'Marginal (3–4σ)', desc:'Desempeño marginal. Control intensivo. Evaluar mejoras en el método.', rules:['1₃ₛ','2₂ₛ','R₄ₛ','4₁ₛ'], N:6, R:2, lote:45 };
+  return { cls:'sigma-poor', label:'Inaceptable (<3σ)', desc:'El método no cumple los requisitos mínimos de calidad. No reportar resultados. Mejorar el método antes de continuar.', rules:[], N:0, R:0, lote:0 };
+}
+
+let ljChartInstance = null;
+
+// ─── CALCULADORA FASE 1 ───
+function calcularFase1() {
+  const raw = document.getElementById('qc_valores').value;
+  const vals = parseValues(raw);
+  const errEl = document.getElementById('error_fase1');
+  if(vals.length<5){ errEl.style.display='block'; return; }
+  errEl.style.display='none';
+
+  window._qcVals = vals;
+  const s = stats(vals);
+  window._qcStats = s;
+
+  const grid = document.getElementById('stats_grid');
+  grid.innerHTML = `
+    <div class="result-card"><div class="rc-label">N (datos)</div><div class="rc-value">${s.n}</div><div class="rc-unit">determinaciones</div></div>
+    <div class="result-card"><div class="rc-label">Media (X̄)</div><div class="rc-value">${s.mean.toFixed(3)}</div><div class="rc-unit">unidades</div></div>
+    <div class="result-card"><div class="rc-label">DE</div><div class="rc-value">${s.sd.toFixed(3)}</div><div class="rc-unit">desv. estándar</div></div>
+    <div class="result-card"><div class="rc-label">CV%</div><div class="rc-value ${s.cv<5?'':''}"; style="color:${s.cv<3?'var(--green)':s.cv<5?'var(--amber)':'var(--red)'};">${s.cv.toFixed(2)}</div><div class="rc-unit">coef. variación</div></div>
+    <div class="result-card"><div class="rc-label">Mín / Máx</div><div class="rc-value" style="font-size:16px;">${s.min.toFixed(2)} / ${s.max.toFixed(2)}</div><div class="rc-unit">rango</div></div>
+    <div class="result-card"><div class="rc-label">X̄ ± 2DE</div><div class="rc-value" style="font-size:16px;">${(s.mean-2*s.sd).toFixed(2)} – ${(s.mean+2*s.sd).toFixed(2)}</div><div class="rc-unit">límites aviso</div></div>
+  `;
+
+  document.getElementById('resultados_f1').classList.add('show');
+  document.getElementById('resultados_sigma').classList.remove('show');
+}
+
+// ─── CALCULADORA SIGMA ───
+function calcularSigma() {
+  const tea = parseFloat(document.getElementById('tea').value);
+  const sesgo = parseFloat(document.getElementById('sesgo').value);
+  const fuenteTea = document.getElementById('tea_fuente').value;
+  const errEl = document.getElementById('error_fase2');
+
+  if(isNaN(tea)||isNaN(sesgo)||!window._qcStats){ errEl.style.display='block'; return; }
+  errEl.style.display='none';
+
+  const cv = window._qcStats.cv;
+  const sigma = (tea - sesgo) / cv;
+  const cfg = getSigmaConfig(sigma);
+  const vals = window._qcVals;
+  const s = window._qcStats;
+  const analito = document.getElementById('analito').value || 'Analito';
+  const nivel = document.getElementById('nivel').value;
+
+  // Sigma display
+  document.getElementById('sigma_display').innerHTML = `
+    <div class="sigma-display ${cfg.cls}">
+      <div class="sigma-value-big"><span class="sigma-sym">σ</span>${sigma.toFixed(1)}</div>
+      <div class="sigma-info">
+        <div class="sigma-label">${cfg.label}</div>
+        <div class="sigma-desc">${cfg.desc}<br><br>
+        <strong style="color:rgba(255,255,255,.9);">Fórmula:</strong> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">(${tea}% TEa − ${sesgo}% Sesgo) / ${cv.toFixed(2)}% CV = ${sigma.toFixed(2)}σ</span>
+        <br><small style="color:rgba(255,255,255,.6);font-size:11px;">Fuente TEa: ${fuenteTea}</small>
+        </div>
+      </div>
+    </div>`;
+
+  // Run size
+  document.getElementById('runsize_display').innerHTML = cfg.N > 0 ? `
+    <div class="runsize-box">
+      <h4>Estrategia de control recomendada</h4>
+      <div class="runsize-grid">
+        <div class="rs-item"><div class="rs-val">${cfg.rules.join(' · ')}</div><div class="rs-lbl">Reglas activas</div></div>
+        <div class="rs-item"><div class="rs-val">${cfg.N}</div><div class="rs-lbl">N controles / corrida</div></div>
+        <div class="rs-item"><div class="rs-val">${cfg.lote}</div><div class="rs-lbl">Pacientes máx. entre controles</div></div>
+      </div>
+    </div>` : `<div class="alert-box"><strong>⛔ Sigma &lt;3:</strong> El método no cumple los requisitos mínimos. No se recomienda el control estadístico sin antes mejorar el método analítico. Investigar fuentes de imprecisión y sesgo.</div>`;
+
+  // Westgard rules detail
+  if(cfg.rules.length>0){
+    const rulesDesc = {
+      '1₃ₛ':'Un valor supera ±3DE → rechazar corrida',
+      '2₂ₛ':'Dos valores consecutivos superan ±2DE en el mismo lado → rechazar',
+      'R₄ₛ':'Rango entre 2 valores &gt;4DE → rechazar',
+      '4₁ₛ':'Cuatro valores consecutivos más allá de ±1DE → rechazar',
+      '10ₓ':'Diez valores consecutivos en el mismo lado de la media → rechazar'
+    };
+    const cards = cfg.rules.map(r=>`
+      <div class="wg-rule-card">
+        <div class="rule-name">${r}</div>
+        <div class="rule-desc">${rulesDesc[r]||''}</div>
+      </div>`).join('');
+    document.getElementById('westgard_display').innerHTML = `
+      <div class="westgard-recommendation">
+        <h4>📋 Reglas de Westgard para σ=${sigma.toFixed(1)}</h4>
+        <div class="wg-rule-grid">${cards}</div>
+      </div>`;
+  }
+
+  // LJ Chart
+  const labels = vals.map((_,i)=>'D'+(i+1));
+  const l2p = s.mean+2*s.sd, l2n = s.mean-2*s.sd;
+  const l3p = s.mean+3*s.sd, l3n = s.mean-3*s.sd;
+
+  const pointColors = vals.map(v=>{
+    const z = Math.abs((v-s.mean)/s.sd);
+    if(z>3) return '#d94f3d';
+    if(z>2) return '#e8a838';
+    return '#1a9b8a';
+  });
+
+  document.getElementById('lj_note').textContent = `${analito} · Nivel ${nivel} · Media=${s.mean.toFixed(3)}, DE=${s.sd.toFixed(3)}, CV=${s.cv.toFixed(2)}%`;
+
+  if(ljChartInstance) ljChartInstance.destroy();
+  const ctx = document.getElementById('ljChart').getContext('2d');
+  ljChartInstance = new Chart(ctx, {
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        { label:'Resultados QC', data:vals, borderColor:'#1a9b8a', backgroundColor:pointColors, pointBackgroundColor:pointColors, pointRadius:6, pointHoverRadius:8, tension:0.3, fill:false, borderWidth:2 },
+        { label:'Media', data:Array(vals.length).fill(s.mean), borderColor:'#0d1b2a', borderDash:[6,3], pointRadius:0, borderWidth:1.5 },
+        { label:'+2DE', data:Array(vals.length).fill(l2p), borderColor:'#e8a838', borderDash:[4,4], pointRadius:0, borderWidth:1 },
+        { label:'-2DE', data:Array(vals.length).fill(l2n), borderColor:'#e8a838', borderDash:[4,4], pointRadius:0, borderWidth:1 },
+        { label:'+3DE', data:Array(vals.length).fill(l3p), borderColor:'#d94f3d', borderDash:[2,4], pointRadius:0, borderWidth:1.5 },
+        { label:'-3DE', data:Array(vals.length).fill(l3n), borderColor:'#d94f3d', borderDash:[2,4], pointRadius:0, borderWidth:1.5 },
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{ labels:{ font:{ family:'IBM Plex Sans', size:11 }, boxWidth:20 } },
+        tooltip:{
+          callbacks:{
+            label: ctx => {
+              if(ctx.datasetIndex!==0) return ctx.dataset.label+': '+ctx.parsed.y.toFixed(3);
+              const z = ((ctx.parsed.y-s.mean)/s.sd).toFixed(2);
+              return `${ctx.parsed.y.toFixed(3)} (z=${z})`;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{ grid:{ display:false }, ticks:{ font:{ size:10, family:'IBM Plex Mono' } } },
+        y:{ grid:{ color:'rgba(0,0,0,0.04)' }, ticks:{ font:{ size:11, family:'IBM Plex Mono' } } }
+      }
+    }
+  });
+
+  // Violations
+  const viols = checkWestgard(vals, s.mean, s.sd);
+  let vhtml = '<div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px;">';
+  vhtml += '<h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;">🔎 Verificación de Reglas de Westgard</h4>';
+  vhtml += '<div class="violations-list">';
+  if(viols.length===0){
+    vhtml += '<div class="violation-item ok"><div class="violation-dot ok"></div>✅ Ninguna regla de Westgard activada. La corrida es aceptable.</div>';
+  } else {
+    const rejects = viols.filter(v=>v.type==='reject');
+    const warns = viols.filter(v=>v.type==='warn');
+    if(rejects.length>0){
+      vhtml += `<div class="violation-item reject"><div class="violation-dot reject"></div><strong>⛔ CORRIDA RECHAZADA</strong> — Se activan ${rejects.length} regla(s) de rechazo.</div>`;
+      rejects.forEach(v => { vhtml += `<div class="violation-item reject" style="margin-left:20px;"><div class="violation-dot reject"></div>Regla <strong>${v.rule}</strong> — Dato ${v.idx}: ${v.msg}</div>`; });
+    }
+    warns.forEach(v => { vhtml += `<div class="violation-item warn"><div class="violation-dot warn"></div>Regla <strong>${v.rule}</strong> — Dato ${v.idx}: ${v.msg}</div>`; });
+  }
+  vhtml += '</div></div>';
+  document.getElementById('violations_display').innerHTML = vhtml;
+
+  document.getElementById('resultados_sigma').classList.add('show');
+  setTimeout(()=>document.getElementById('sigma_display').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+// ─── EJEMPLO DE DATOS ───
+function cargarEjemplo() {
+  document.getElementById('analito').value = 'TTPA';
+  document.getElementById('nivel').value = 'Normal';
+  document.getElementById('qc_valores').value = `32.4\n31.8\n33.1\n32.9\n31.5\n32.7\n33.2\n31.9\n32.5\n33.0\n32.2\n31.7\n32.8\n33.4\n32.1\n32.6\n31.4\n32.3\n33.1\n32.0`;
+  document.getElementById('tea').value = 15;
+  document.getElementById('sesgo').value = 2;
+}
+
+// ─── CALCULADORA VERIFICACIÓN DE LOTE ───
+let baChartInstance = null;
+
+function calcularVerificacion() {
+  const valsA = parseValues(document.getElementById('v_loteA').value);
+  const valsB = parseValues(document.getElementById('v_loteB').value);
+  const tea = parseFloat(document.getElementById('v_tea').value);
+  const errEl = document.getElementById('error_veri');
+
+  if(valsA.length<3||valsB.length<3||valsA.length!==valsB.length||isNaN(tea)){
+    errEl.style.display='block'; return;
+  }
+  errEl.style.display='none';
+
+  const n = valsA.length;
+  const meanA = valsA.reduce((a,b)=>a+b,0)/n;
+  const meanB = valsB.reduce((a,b)=>a+b,0)/n;
+  const sesgo = ((meanB-meanA)/meanA)*100;
+  const absSesgo = Math.abs(sesgo);
+  const limiteRechazo = 0.2*tea;
+
+  // Paired t-test
+  const diffs = valsA.map((a,i)=>valsB[i]-a);
+  const meanDiff = diffs.reduce((a,b)=>a+b,0)/n;
+  const sdDiff = Math.sqrt(diffs.reduce((s,d)=>s+Math.pow(d-meanDiff,2),0)/(n-1));
+  const tStat = meanDiff/(sdDiff/Math.sqrt(n));
+  const tCritical = 2.0; // aprox t0.05 dos colas, df>=20
+  const pSignif = Math.abs(tStat) > tCritical;
+
+  const analito = document.getElementById('v_analito').value || 'Analito';
+
+  // Decision
+  let decision, decClass, decIcon;
+  if(absSesgo <= limiteRechazo){
+    decision = `✔ ACEPTAR el nuevo lote de reactivo`; decClass='accept'; decIcon='✅';
+  } else if(absSesgo <= 0.5*tea) {
+    decision = `🔍 INVESTIGAR — Sesgo supera el límite de rechazo pero es inferior al 50% del TEa`; decClass='investigate'; decIcon='⚠️';
+  } else {
+    decision = `✗ RECHAZAR el nuevo lote de reactivo`; decClass='reject'; decIcon='⛔';
+  }
+
+  document.getElementById('veri_decision').innerHTML = `
+    <div class="dt-action ${decClass}" style="font-size:16px;padding:14px 20px;border-radius:10px;display:flex;align-items:center;gap:10px;margin-bottom:20px;border:1.5px solid currentColor;">
+      <span style="font-size:24px;">${decIcon}</span>
+      <div>
+        <div style="font-size:15px;font-weight:700;">${decision}</div>
+        <div style="font-size:12px;font-weight:400;margin-top:3px;">TEa=${tea}% · Límite de rechazo=${limiteRechazo.toFixed(1)}% · Sesgo observado=${sesgo.toFixed(2)}%</div>
+      </div>
+    </div>`;
+
+  document.getElementById('veri_stats').innerHTML = `
+    <div class="results-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px;">
+      <div class="result-card"><div class="rc-label">N muestras</div><div class="rc-value">${n}</div></div>
+      <div class="result-card"><div class="rc-label">Media Lote A</div><div class="rc-value">${meanA.toFixed(3)}</div></div>
+      <div class="result-card"><div class="rc-label">Media Lote B</div><div class="rc-value">${meanB.toFixed(3)}</div></div>
+      <div class="result-card"><div class="rc-label">Sesgo%</div><div class="rc-value" style="color:${absSesgo<=limiteRechazo?'var(--green)':absSesgo<=0.5*tea?'var(--amber)':'var(--red)'};">${sesgo.toFixed(2)}%</div></div>
+      <div class="result-card"><div class="rc-label">Límite rechazo</div><div class="rc-value">${limiteRechazo.toFixed(2)}%</div><div class="rc-unit">= 0.2 × TEa</div></div>
+      <div class="result-card"><div class="rc-label">t estadístico</div><div class="rc-value">${Math.abs(tStat).toFixed(3)}</div><div class="rc-unit">t crítico ≈2.0</div></div>
+      <div class="result-card"><div class="rc-label">¿p&lt;0.05?</div><div class="rc-value" style="color:${pSignif?'var(--amber)':'var(--green)'};">${pSignif?'Sí':'No'}</div><div class="rc-unit">${pSignif?'Diferencia significativa':'Sin diferencia signif.'}</div></div>
+      <div class="result-card"><div class="rc-label">TEa usado</div><div class="rc-value">${tea}%</div></div>
+    </div>
+    <div class="${absSesgo<=limiteRechazo?'info-box':absSesgo<=0.5*tea?'warning-box':'alert-box'}" style="margin-bottom:20px;">
+      <strong>Interpretación:</strong> El sesgo entre lotes es <strong>${sesgo.toFixed(2)}%</strong>. 
+      El límite de rechazo (0.2 × TEa = 0.2 × ${tea}% = ${limiteRechazo.toFixed(1)}%) 
+      ${absSesgo<=limiteRechazo?'<strong>no se supera</strong>. El nuevo lote es clínicamente equivalente al anterior.':
+        absSesgo<=0.5*tea?'<strong>se supera</strong>, pero el sesgo está por debajo del 50% del TEa. Se recomienda investigar la causa antes de decidir.':
+        '<strong>se supera significativamente</strong>. El nuevo lote introduce un error clínicamente inaceptable. Rechazar y contactar al proveedor.'
+      }
+      ${pSignif?' La diferencia es estadísticamente significativa (t-test p<0.05), lo que refuerza la relevancia del sesgo.':' La diferencia no alcanza significación estadística, pero el criterio clínico (TEa) prevalece.'}
+    </div>`;
+
+  // Bland-Altman
+  const means_ba = valsA.map((a,i)=>(a+valsB[i])/2);
+  const diffs_ba = valsA.map((a,i)=>valsB[i]-a);
+  const meanDiffBA = diffs_ba.reduce((a,b)=>a+b,0)/n;
+  const sdDiffBA = Math.sqrt(diffs_ba.reduce((s,d)=>s+Math.pow(d-meanDiffBA,2),0)/(n-1));
+  const loa_up = meanDiffBA+1.96*sdDiffBA;
+  const loa_dn = meanDiffBA-1.96*sdDiffBA;
+
+  if(baChartInstance) baChartInstance.destroy();
+  const ctx2 = document.getElementById('baChart').getContext('2d');
+  baChartInstance = new Chart(ctx2,{
+    type:'scatter',
+    data:{
+      datasets:[
+        {
+          label:'Diferencia B−A',
+          data: means_ba.map((m,i)=>({x:m, y:diffs_ba[i]})),
+          backgroundColor: diffs_ba.map(d=>Math.abs(d)>1.96*sdDiffBA?'#d94f3d':'#1a9b8a'),
+          pointRadius:6,
+        },
+        { label:'Media diferencia', data:[{x:Math.min(...means_ba),y:meanDiffBA},{x:Math.max(...means_ba),y:meanDiffBA}], type:'line', borderColor:'#0d1b2a', borderDash:[6,3], pointRadius:0, borderWidth:1.5 },
+        { label:`+1.96 DE (${loa_up.toFixed(3)})`, data:[{x:Math.min(...means_ba),y:loa_up},{x:Math.max(...means_ba),y:loa_up}], type:'line', borderColor:'#d94f3d', borderDash:[4,4], pointRadius:0, borderWidth:1 },
+        { label:`-1.96 DE (${loa_dn.toFixed(3)})`, data:[{x:Math.min(...means_ba),y:loa_dn},{x:Math.max(...means_ba),y:loa_dn}], type:'line', borderColor:'#d94f3d', borderDash:[4,4], pointRadius:0, borderWidth:1 },
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{ legend:{ labels:{ font:{ family:'IBM Plex Sans', size:11 } } } },
+      scales:{
+        x:{ title:{ display:true, text:'Media (A+B)/2', font:{ family:'IBM Plex Sans', size:11 } }, grid:{ display:false } },
+        y:{ title:{ display:true, text:'Diferencia (B−A)', font:{ family:'IBM Plex Sans', size:11 } } }
+      }
+    }
+  });
+
+  document.getElementById('resultados_veri').classList.add('show');
+  document.getElementById('veri_chart_wrapper').style.display='block';
+}
+
+function cargarEjemploVeri(){
+  document.getElementById('v_analito').value='TP (segundos)';
+  document.getElementById('v_tea').value=15;
+  document.getElementById('v_loteA').value=`13.2\n14.5\n11.8\n16.2\n12.9\n15.1\n13.8\n14.0\n12.5\n15.8`;
+  document.getElementById('v_loteB').value=`13.5\n14.8\n12.1\n16.5\n13.2\n15.4\n14.0\n14.3\n12.8\n16.1`;
+}
+</script>
+
+</body>
+</html>
