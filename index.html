@@ -8,43 +8,23 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
-:root {
-  --navy: #0d1b2a;
-  --navy-mid: #1a2f45;
-  --navy-light: #243b55;
-  --teal: #1a9b8a;
-  --teal-light: #22bba8;
-  --teal-pale: #e6f7f5;
-  --amber: #e8a838;
-  --amber-pale: #fef8ec;
-  --red: #d94f3d;
-  --red-pale: #fdf0ee;
-  --green: #2e9e6b;
-  --green-pale: #edf7f2;
-  --white: #ffffff;
-  --off-white: #f8f9fc;
-  --gray-50: #f4f5f7;
-  --gray-100: #e8eaed;
-  --gray-200: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-600: #4b5563;
-  --gray-800: #1f2937;
-  --text: #1f2937;
-  --text-light: #4b5563;
-  --border: #e2e6ea;
-  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
-  --shadow-lg: 0 4px 6px rgba(0,0,0,.07), 0 12px 40px rgba(0,0,0,.1);
-  --radius: 10px;
-  --sidebar-w: 260px;
-}
+/* ═══ WERFEN PALETTE — HIGH CONTRAST ═══
+   Azul oscuro:  #003770  (sidebar, headers de tabla, fondos oscuros)
+   Azul medio:   #004B8D  (texto sobre blanco, bordes activos)
+   Naranja:      #F47920  (CTAs, acentos, badges, step activo)
+   Blanco:       #FFFFFF  (fondo principal)
+   Negro/texto:  #1A1A1A  (texto principal)
+   Gris claro:   #F0F4F8  (fondos de tarjeta)
+   Gris borde:   #C8D4E3  (bordes)
+══════════════════════════════════════════ */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
   font-family: 'IBM Plex Sans', sans-serif;
-  background: var(--off-white);
-  color: var(--text);
+  background: #FFFFFF;
+  color: #1A1A1A;
   line-height: 1.65;
   display: flex;
   min-height: 100vh;
@@ -52,8 +32,8 @@ body {
 
 /* ─── SIDEBAR ─── */
 #sidebar {
-  width: var(--sidebar-w);
-  background: var(--navy);
+  width: 264px;
+  background: #003770;
   position: fixed;
   top: 0; left: 0; bottom: 0;
   overflow-y: auto;
@@ -61,632 +41,677 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 .sidebar-logo {
-  padding: 28px 24px 20px;
-  border-bottom: 1px solid rgba(255,255,255,.1);
+  padding: 24px 20px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.15);
 }
 .sidebar-logo .logo-icon {
-  width: 38px; height: 38px;
-  background: var(--teal);
+  width: 40px; height: 40px;
+  background: #F47920;
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 12px;
-  font-size: 20px;
+  margin-bottom: 10px;
+  font-size: 22px;
 }
 .sidebar-logo h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  color: var(--white);
-  line-height: 1.3;
-  font-weight: 600;
+  font-size: 14px;
+  color: #FFFFFF;
+  line-height: 1.35;
+  font-weight: 700;
 }
 .sidebar-logo p {
-  font-size: 11px;
-  color: rgba(255,255,255,.5);
+  font-size: 10px;
+  color: rgba(255,255,255,.55);
   margin-top: 4px;
   font-family: 'IBM Plex Mono', monospace;
-  letter-spacing: .04em;
+  letter-spacing: .06em;
 }
-
-nav { padding: 16px 0; flex: 1; }
-
+nav { padding: 12px 0; flex: 1; }
 .nav-section {
-  padding: 6px 16px 4px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .1em;
+  padding: 8px 18px 3px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.35);
+  color: rgba(255,255,255,.4);
   margin-top: 8px;
 }
-
 .nav-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 20px;
+  padding: 10px 18px;
   cursor: pointer;
-  color: rgba(255,255,255,.65);
+  color: rgba(255,255,255,.75);
   font-size: 13px;
   font-weight: 400;
-  transition: all .2s;
+  transition: all .18s;
   border-left: 3px solid transparent;
   text-decoration: none;
 }
-.nav-item:hover { color: var(--white); background: rgba(255,255,255,.06); }
-.nav-item.active {
-  color: var(--white);
-  background: rgba(26,155,138,.18);
-  border-left-color: var(--teal);
-  font-weight: 500;
+.nav-item:hover {
+  color: #FFFFFF;
+  background: rgba(255,255,255,.08);
+  border-left-color: rgba(244,121,32,.5);
 }
-.nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-item.active {
+  color: #FFFFFF;
+  background: rgba(244,121,32,.2);
+  border-left-color: #F47920;
+  font-weight: 600;
+}
+.nav-item .nav-icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; }
 .nav-badge {
   margin-left: auto;
-  background: var(--teal);
-  color: white;
+  background: rgba(255,255,255,.15);
+  color: rgba(255,255,255,.85);
   font-size: 9px;
   font-weight: 600;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 10px;
   font-family: 'IBM Plex Mono', monospace;
 }
-
+.nav-badge.new { background: #F47920; color: #FFFFFF; }
 .sidebar-footer {
-  padding: 16px 20px;
+  padding: 14px 18px;
   border-top: 1px solid rgba(255,255,255,.1);
-  font-size: 11px;
-  color: rgba(255,255,255,.3);
-  line-height: 1.5;
+  font-size: 10px;
+  color: rgba(255,255,255,.35);
+  line-height: 1.6;
 }
+.sidebar-footer strong { color: rgba(255,255,255,.55); display: block; margin-bottom: 3px; }
 
-/* ─── MAIN CONTENT ─── */
-#main {
-  margin-left: var(--sidebar-w);
-  flex: 1;
-  min-height: 100vh;
-}
-
+/* ─── MAIN ─── */
+#main { margin-left: 264px; flex: 1; min-height: 100vh; }
 .section-page {
   display: none;
-  padding: 40px 48px;
-  max-width: 960px;
-  animation: fadeIn .3s ease;
+  padding: 36px 44px;
+  max-width: 980px;
+  animation: fadeIn .25s ease;
 }
 .section-page.active { display: block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:translateY(0) } }
 
-@keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
-
-/* ─── PAGE HEADERS ─── */
+/* ─── PAGE HEADER ─── */
 .page-header {
-  margin-bottom: 36px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #F47920;
 }
 .page-header .breadcrumb {
-  font-size: 11px;
-  color: var(--gray-400);
+  font-size: 10px;
+  color: #F47920;
   font-family: 'IBM Plex Mono', monospace;
-  letter-spacing: .05em;
-  margin-bottom: 8px;
+  letter-spacing: .08em;
+  margin-bottom: 6px;
   text-transform: uppercase;
+  font-weight: 600;
 }
 .page-header h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  color: var(--navy);
+  font-size: 26px;
+  color: #003770;
   font-weight: 700;
   line-height: 1.25;
   margin-bottom: 8px;
 }
 .page-header .subtitle {
-  color: var(--text-light);
-  font-size: 15px;
-  max-width: 680px;
+  color: #3A4A5C;
+  font-size: 14px;
+  max-width: 700px;
+  line-height: 1.65;
 }
-.norm-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 14px;
-}
+.norm-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
 .norm-pill {
-  font-size: 11px;
+  font-size: 10px;
   font-family: 'IBM Plex Mono', monospace;
-  padding: 3px 10px;
+  padding: 3px 9px;
   border-radius: 20px;
-  font-weight: 500;
-  background: var(--teal-pale);
-  color: var(--teal);
-  border: 1px solid rgba(26,155,138,.25);
+  font-weight: 600;
+  background: #003770;
+  color: #FFFFFF;
+  border: none;
 }
+.norm-pill.es { background: #F47920; color: #FFFFFF; }
 
-/* ─── INTRO PANEL (collapsible) ─── */
+/* ─── INTRO PANEL ─── */
 .intro-panel {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-  border-radius: var(--radius);
-  margin-bottom: 32px;
+  background: #003770;
+  border-radius: 10px;
+  margin-bottom: 26px;
   overflow: hidden;
+  border: none;
 }
 .intro-toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 22px;
+  padding: 14px 20px;
   cursor: pointer;
   user-select: none;
 }
 .intro-toggle .label {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: var(--white);
+  gap: 9px;
+  color: #FFFFFF;
   font-size: 13px;
   font-weight: 500;
 }
 .intro-toggle .tag {
-  background: var(--teal);
-  color: white;
-  font-size: 10px;
+  background: #F47920;
+  color: #FFFFFF;
+  font-size: 9px;
   padding: 2px 8px;
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: .05em;
+  text-transform: uppercase;
 }
-.intro-toggle .arrow {
-  color: rgba(255,255,255,.5);
-  font-size: 18px;
-  transition: transform .25s;
-}
-.intro-body {
-  display: none;
-  padding: 0 22px 22px;
-}
+.intro-toggle .arrow { color: rgba(255,255,255,.6); font-size: 16px; transition: transform .25s; }
+.intro-body { display: none; padding: 0 20px 20px; }
 .intro-body.open { display: block; }
-.intro-toggle.open .arrow { transform: rotate(180deg); }
-
-.intro-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 4px;
-}
+.intro-toggle.open .arrow { transform: rotate(180deg); color: #F47920; }
+.intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
 .intro-card {
-  background: rgba(255,255,255,.07);
+  background: rgba(255,255,255,.09);
   border-radius: 8px;
-  padding: 14px 16px;
-  border: 1px solid rgba(255,255,255,.1);
+  padding: 13px 15px;
+  border: 1px solid rgba(255,255,255,.12);
 }
 .intro-card h4 {
-  color: var(--teal-light);
-  font-size: 12px;
-  font-weight: 600;
+  color: #F47920;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
-.intro-card p, .intro-card li {
-  font-size: 13px;
-  color: rgba(255,255,255,.75);
-  line-height: 1.6;
+.intro-card p, .intro-card li { font-size: 13px; color: rgba(255,255,255,.82); line-height: 1.6; }
+.intro-card ul { padding-left: 15px; }
+.intro-card li { margin-bottom: 3px; }
+.formula-inline {
+  font-family: 'IBM Plex Mono', monospace;
+  color: #F47920;
+  font-size: 12px;
+  background: rgba(255,255,255,.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 4px;
+  font-weight: 600;
 }
-.intro-card ul { padding-left: 16px; }
-.intro-card li { margin-bottom: 4px; }
 
-/* ─── STEP CARDS (accordion) ─── */
-.steps-container { display: flex; flex-direction: column; gap: 10px; }
+/* ─── QUICK ACCESS CARDS ─── */
+.quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 26px; }
+.qcard {
+  background: #FFFFFF;
+  border: 2px solid #C8D4E3;
+  border-radius: 10px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: border-color .18s, box-shadow .18s, transform .15s;
+  box-shadow: 0 1px 3px rgba(0,55,112,.07);
+}
+.qcard:hover {
+  border-color: #F47920;
+  box-shadow: 0 4px 16px rgba(244,121,32,.15);
+  transform: translateY(-2px);
+}
+.qcard .qicon { font-size: 26px; margin-bottom: 9px; }
+.qcard .qtitle { font-weight: 700; font-size: 14px; color: #003770; margin-bottom: 4px; }
+.qcard .qdesc { font-size: 12.5px; color: #4A5568; line-height: 1.55; }
+.qcard .qnorm { margin-top: 10px; font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: #F47920; font-weight: 600; }
 
+/* ─── STEP CARDS ─── */
+.steps-container { display: flex; flex-direction: column; gap: 8px; }
 .step-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: #FFFFFF;
+  border: 1.5px solid #C8D4E3;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: box-shadow .2s;
+  transition: border-color .18s, box-shadow .18s;
 }
-.step-card:hover { box-shadow: var(--shadow-lg); }
-
+.step-card:hover { border-color: #004B8D; box-shadow: 0 2px 12px rgba(0,55,112,.1); }
 .step-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 20px;
+  gap: 13px;
+  padding: 14px 18px;
   cursor: pointer;
   user-select: none;
   transition: background .15s;
 }
-.step-header:hover { background: var(--gray-50); }
-.step-header.open { background: var(--teal-pale); }
-
+.step-header:hover { background: #F0F4F8; }
+.step-header.open {
+  background: #003770;
+}
 .step-number {
   width: 32px; height: 32px;
-  background: var(--navy);
-  color: white;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #003770;
+  color: #FFFFFF;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   flex-shrink: 0;
 }
-.step-header.open .step-number { background: var(--teal); }
-
+.step-header.open .step-number { background: #F47920; color: #FFFFFF; }
 .step-title-block { flex: 1; }
-.step-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--navy);
-  line-height: 1.3;
-}
-.step-subtitle {
-  font-size: 12px;
-  color: var(--gray-400);
-  margin-top: 2px;
-  font-family: 'IBM Plex Mono', monospace;
-}
-
-.step-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.step-title { font-size: 14px; font-weight: 600; color: #003770; line-height: 1.3; }
+.step-header.open .step-title { color: #FFFFFF; }
+.step-subtitle { font-size: 11px; color: #6B7A8D; margin-top: 2px; font-family: 'IBM Plex Mono', monospace; }
+.step-header.open .step-subtitle { color: rgba(255,255,255,.65); }
+.step-tags { display: flex; gap: 5px; flex-wrap: wrap; }
 .step-tag {
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-weight: 600;
+  font-size: 9.5px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  font-weight: 700;
   letter-spacing: .03em;
+  text-transform: uppercase;
 }
-.tag-iso { background: #ede9fe; color: #6d28d9; }
-.tag-clsi { background: #dbeafe; color: #1d4ed8; }
-.tag-icsh { background: #fce7f3; color: #be185d; }
-.tag-eflm { background: #d1fae5; color: #065f46; }
-.tag-why { background: #fef3c7; color: #92400e; }
-
-.step-arrow { color: var(--gray-400); font-size: 18px; transition: transform .25s; flex-shrink: 0; }
-.step-header.open .step-arrow { transform: rotate(180deg); color: var(--teal); }
+.tag-iso  { background: #E8F0F9; color: #003770; }
+.tag-clsi { background: #003770; color: #FFFFFF; }
+.tag-icsh { background: #F47920; color: #FFFFFF; }
+.tag-eflm { background: #1A1A1A; color: #FFFFFF; }
+.tag-why  { background: #FFF3EA; color: #7A3200; border: 1px solid #F47920; }
+.tag-key  { background: #C0392B; color: #FFFFFF; }
+.step-arrow { color: #9CA3AF; font-size: 16px; transition: transform .25s; flex-shrink: 0; }
+.step-header.open .step-arrow { transform: rotate(180deg); color: #F47920; }
 
 .step-body {
   display: none;
-  padding: 0 20px 20px 66px;
-  border-top: 1px solid var(--gray-100);
+  padding: 0 18px 18px 63px;
+  border-top: 2px solid #F47920;
+  background: #FFFFFF;
 }
 .step-body.open { display: block; }
-
 .step-body h4 {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 10.5px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--teal);
-  margin: 16px 0 8px;
+  letter-spacing: .09em;
+  color: #004B8D;
+  margin: 14px 0 7px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #E8F0F9;
+}
+.step-body p { font-size: 13.5px; color: #2D3748; margin-bottom: 7px; line-height: 1.7; }
+.step-body ul, .step-body ol { padding-left: 18px; }
+.step-body li { font-size: 13.5px; color: #2D3748; margin-bottom: 5px; line-height: 1.65; }
+.step-body strong { color: #003770; font-weight: 700; }
+.step-body code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  background: #F0F4F8;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #003770;
+  font-weight: 600;
 }
 
-.step-body p { font-size: 14px; color: var(--text-light); margin-bottom: 8px; line-height: 1.7; }
-.step-body ul, .step-body ol { padding-left: 18px; }
-.step-body li { font-size: 14px; color: var(--text-light); margin-bottom: 6px; line-height: 1.65; }
-.step-body strong { color: var(--text); font-weight: 600; }
-
+/* ─── NOTIFICATION BOXES ─── */
 .source-box {
-  margin-top: 14px;
+  margin-top: 12px;
   padding: 10px 14px;
-  background: var(--gray-50);
-  border-left: 3px solid var(--teal);
+  background: #F0F4F8;
+  border-left: 3px solid #004B8D;
   border-radius: 0 6px 6px 0;
   font-size: 12px;
-  color: var(--text-light);
+  color: #2D3748;
 }
 .source-box .src-label {
-  font-weight: 600;
-  color: var(--teal);
+  font-weight: 700;
+  color: #003770;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: .04em;
+  font-size: 10px;
+  letter-spacing: .06em;
   text-transform: uppercase;
   margin-bottom: 4px;
 }
-
 .warning-box {
-  margin-top: 12px;
+  margin-top: 10px;
   padding: 10px 14px;
-  background: var(--amber-pale);
-  border-left: 3px solid var(--amber);
+  background: #FFF3EA;
+  border-left: 3px solid #F47920;
   border-radius: 0 6px 6px 0;
   font-size: 13px;
-  color: #7c4a00;
+  color: #7A3200;
+  font-weight: 500;
 }
-.warning-box::before { content: "⚠️ "; }
-
+.warning-box::before { content: "⚠️  "; }
 .alert-box {
-  margin-top: 12px;
+  margin-top: 10px;
   padding: 10px 14px;
-  background: var(--red-pale);
-  border-left: 3px solid var(--red);
+  background: #FEF0EE;
+  border-left: 3px solid #C0392B;
   border-radius: 0 6px 6px 0;
   font-size: 13px;
-  color: #7f1d1d;
+  color: #7F1D1D;
+  font-weight: 500;
 }
-
 .info-box {
-  margin-top: 12px;
+  margin-top: 10px;
   padding: 10px 14px;
-  background: var(--teal-pale);
-  border-left: 3px solid var(--teal);
+  background: #E8F0F9;
+  border-left: 3px solid #004B8D;
   border-radius: 0 6px 6px 0;
   font-size: 13px;
-  color: #065f46;
+  color: #003770;
+  font-weight: 500;
 }
+.es-box {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #FFF3EA;
+  border-left: 3px solid #F47920;
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #7A3200;
+}
+.es-box::before { content: "🇪🇸  España: "; font-weight: 700; }
 
-/* ─── DATA TABLE ─── */
+/* ─── TABLES ─── */
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
-  margin: 12px 0;
+  margin: 10px 0;
 }
 .data-table th {
-  background: var(--navy);
-  color: white;
-  padding: 8px 12px;
+  background: #003770;
+  color: #FFFFFF;
+  padding: 9px 12px;
   text-align: left;
-  font-weight: 600;
-  font-size: 12px;
+  font-weight: 700;
+  font-size: 11px;
   letter-spacing: .04em;
+  text-transform: uppercase;
 }
 .data-table td {
   padding: 8px 12px;
-  border-bottom: 1px solid var(--gray-100);
+  border-bottom: 1px solid #E8EDF3;
   vertical-align: top;
   line-height: 1.5;
+  color: #2D3748;
 }
-.data-table tr:hover td { background: var(--gray-50); }
-.data-table code {
+.data-table tr:nth-child(even) td { background: #F8FAFC; }
+.data-table tr:hover td { background: #E8F0F9; }
+.coag-table-wrap { overflow-x: auto; margin: 10px 0; }
+
+/* ─── FORMULA BOX ─── */
+.formula-box {
+  background: #003770;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 10px 0;
+  text-align: center;
+  border-left: 4px solid #F47920;
+}
+.formula-box .formula-text {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  background: var(--gray-100);
-  padding: 2px 5px;
-  border-radius: 3px;
-  color: var(--navy);
+  font-size: 17px;
+  color: #F47920;
+  font-weight: 600;
+}
+.formula-box .formula-caption {
+  font-size: 11.5px;
+  color: rgba(255,255,255,.6);
+  margin-top: 5px;
 }
 
 /* ─── DECISION TREE ─── */
 .decision-tree {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin: 16px 0;
-  font-size: 13px;
+  background: #F8FAFC;
+  border: 1.5px solid #C8D4E3;
+  border-radius: 8px;
+  padding: 18px;
+  margin: 12px 0;
+  font-size: 13.5px;
 }
-.dt-node {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 0;
-}
+.dt-node { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; }
 .dt-diamond {
-  width: 28px; height: 28px;
-  background: var(--amber);
+  width: 24px; height: 24px;
+  background: #F47920;
   transform: rotate(45deg);
   border-radius: 3px;
   flex-shrink: 0;
   margin-top: 4px;
 }
-.dt-text { color: var(--text-light); line-height: 1.5; }
-.dt-yes { color: var(--green); font-weight: 600; margin-left: 8px; }
-.dt-no { color: var(--red); font-weight: 600; margin-left: 8px; }
-.dt-indent { padding-left: 38px; }
+.dt-text { color: #2D3748; line-height: 1.5; }
+.dt-indent { padding-left: 34px; }
 .dt-action {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   padding: 5px 12px;
   border-radius: 6px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   margin-top: 4px;
 }
-.dt-action.accept { background: var(--green-pale); color: var(--green); }
-.dt-action.reject { background: var(--red-pale); color: var(--red); }
-.dt-action.investigate { background: var(--amber-pale); color: #92400e; }
+.dt-action.accept { background: #003770; color: #FFFFFF; }
+.dt-action.reject { background: #C0392B; color: #FFFFFF; }
+.dt-action.investigate { background: #F47920; color: #FFFFFF; }
 
-/* ─── CALCULADORA ─── */
+/* ─── CALCULADORAS ─── */
 .calc-section {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  margin-bottom: 24px;
+  background: #FFFFFF;
+  border: 1.5px solid #C8D4E3;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,55,112,.08);
+  margin-bottom: 20px;
   overflow: hidden;
 }
 .calc-header {
-  background: var(--navy);
-  padding: 16px 22px;
+  background: #003770;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.calc-header h3 {
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-}
+.calc-header h3 { color: #FFFFFF; font-size: 15px; font-weight: 700; }
 .calc-header .calc-icon {
   width: 34px; height: 34px;
-  background: var(--teal);
+  background: #F47920;
   border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
   font-size: 18px;
+  flex-shrink: 0;
 }
-.calc-body { padding: 22px; }
+.calc-header .calc-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: rgba(255,255,255,.6);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.calc-body { padding: 20px; }
 
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.form-group { display: flex; flex-direction: column; gap: 5px; }
+/* ─── FORM ELEMENTS ─── */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
 .form-group label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-light);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #003770;
   letter-spacing: .03em;
+  text-transform: uppercase;
 }
 .form-group .help {
-  font-size: 11px;
-  color: var(--gray-400);
-  font-style: italic;
-  margin-top: 1px;
+  font-size: 11.5px;
+  color: #5A6A7A;
+  line-height: 1.5;
+  margin-top: 2px;
 }
 .form-group input, .form-group select, .form-group textarea {
-  border: 1px solid var(--gray-200);
+  border: 1.5px solid #C8D4E3;
   border-radius: 6px;
   padding: 9px 12px;
-  font-size: 14px;
+  font-size: 13.5px;
   font-family: 'IBM Plex Sans', sans-serif;
-  color: var(--text);
-  background: var(--white);
+  color: #1A1A1A;
+  background: #FFFFFF;
   transition: border-color .15s, box-shadow .15s;
   outline: none;
 }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  border-color: var(--teal);
-  box-shadow: 0 0 0 3px rgba(26,155,138,.12);
+  border-color: #004B8D;
+  box-shadow: 0 0 0 3px rgba(0,75,141,.12);
 }
 .form-group textarea {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
   resize: vertical;
-  min-height: 120px;
+  min-height: 110px;
 }
 
+/* ─── BUTTONS ─── */
 .btn-primary {
-  background: var(--teal);
-  color: white;
+  background: #004B8D;
+  color: #FFFFFF;
   border: none;
   border-radius: 7px;
-  padding: 11px 24px;
+  padding: 11px 22px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   font-family: 'IBM Plex Sans', sans-serif;
   cursor: pointer;
   transition: background .15s, transform .1s;
+  letter-spacing: .02em;
 }
-.btn-primary:hover { background: var(--teal-light); }
+.btn-primary:hover { background: #003770; }
 .btn-primary:active { transform: scale(.98); }
+
 .btn-secondary {
-  background: transparent;
-  color: var(--teal);
-  border: 1.5px solid var(--teal);
+  background: #FFFFFF;
+  color: #004B8D;
+  border: 2px solid #004B8D;
   border-radius: 7px;
-  padding: 10px 20px;
+  padding: 9px 20px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   font-family: 'IBM Plex Sans', sans-serif;
   cursor: pointer;
   transition: all .15s;
 }
-.btn-secondary:hover { background: var(--teal-pale); }
+.btn-secondary:hover { background: #E8F0F9; border-color: #003770; color: #003770; }
 
-.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
-
-/* ─── RESULTS PANEL ─── */
-.results-panel {
-  display: none;
-  animation: fadeIn .3s ease;
+.btn-orange {
+  background: #F47920;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 7px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'IBM Plex Sans', sans-serif;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
-.results-panel.show { display: block; }
+.btn-orange:hover { background: #d96600; }
+.btn-orange:active { transform: scale(.98); }
+.btn-orange:disabled { background: #C8D4E3; color: #6B7A8D; cursor: not-allowed; }
 
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; align-items: center; }
+
+/* ─── RESULTS ─── */
+.results-panel { display: none; animation: fadeIn .3s ease; }
+.results-panel.show { display: block; }
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(3,1fr);
+  gap: 11px;
+  margin-bottom: 18px;
 }
 .result-card {
-  background: var(--off-white);
-  border: 1px solid var(--border);
+  background: #F0F4F8;
+  border: 1.5px solid #C8D4E3;
   border-radius: 8px;
-  padding: 14px 16px;
+  padding: 13px 14px;
   text-align: center;
 }
 .result-card .rc-label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .07em;
-  color: var(--gray-400);
+  letter-spacing: .08em;
+  color: #004B8D;
   margin-bottom: 4px;
 }
 .result-card .rc-value {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--navy);
+  font-size: 21px;
+  font-weight: 700;
+  color: #003770;
 }
-.result-card .rc-unit {
-  font-size: 11px;
-  color: var(--gray-400);
-  margin-top: 1px;
-}
+.result-card .rc-unit { font-size: 10px; color: #6B7A8D; margin-top: 1px; }
 
-/* Sigma semáforo */
+/* ─── SIGMA DISPLAY ─── */
 .sigma-display {
   border-radius: 10px;
   padding: 20px 24px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
   gap: 20px;
+  border: none;
 }
-.sigma-display.sigma-world { background: linear-gradient(135deg,#065f46,#047857); }
-.sigma-display.sigma-excellent { background: linear-gradient(135deg,#1e40af,#1d4ed8); }
-.sigma-display.sigma-good { background: linear-gradient(135deg,#1a9b8a,#0d9488); }
-.sigma-display.sigma-marginal { background: linear-gradient(135deg,#b45309,#d97706); }
-.sigma-display.sigma-poor { background: linear-gradient(135deg,#991b1b,#dc2626); }
-
+.sigma-display.sigma-world    { background: #065F46; }
+.sigma-display.sigma-excellent { background: #003770; border-left: 6px solid #F47920; }
+.sigma-display.sigma-good     { background: #1A5C2A; }
+.sigma-display.sigma-marginal  { background: #7A3200; }
+.sigma-display.sigma-poor     { background: #7F1D1D; }
 .sigma-value-big {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 52px;
-  font-weight: 600;
-  color: white;
+  font-weight: 700;
+  color: #FFFFFF;
   line-height: 1;
 }
-.sigma-value-big .sigma-sym { font-size: 28px; vertical-align: super; }
+.sigma-value-big .sigma-sym { font-size: 28px; vertical-align: super; color: #F47920; }
 .sigma-info { flex: 1; }
 .sigma-info .sigma-label {
-  color: rgba(255,255,255,.9);
-  font-size: 13px;
-  font-weight: 600;
+  color: #F47920;
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .08em;
-  margin-bottom: 6px;
+  letter-spacing: .09em;
+  margin-bottom: 5px;
 }
-.sigma-info .sigma-desc {
-  color: rgba(255,255,255,.75);
-  font-size: 14px;
-  line-height: 1.5;
+.sigma-info .sigma-desc { color: rgba(255,255,255,.88); font-size: 13.5px; line-height: 1.5; }
+.sigma-info .sigma-formula {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,.55);
+  margin-top: 5px;
 }
 
+/* ─── WESTGARD RECOMMENDATION ─── */
 .westgard-recommendation {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  margin-bottom: 20px;
+  background: #FFFFFF;
+  border: 1.5px solid #C8D4E3;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
 }
 .westgard-recommendation h4 {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  color: var(--navy);
+  color: #003770;
   margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
 }
-.wg-rule-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
+.wg-rule-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 9px; }
 .wg-rule-card {
-  background: var(--off-white);
+  background: #003770;
   border-radius: 7px;
   padding: 10px 12px;
   text-align: center;
@@ -694,181 +719,142 @@ nav { padding: 16px 0; flex: 1; }
 .wg-rule-card .rule-name {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 14px;
-  font-weight: 600;
-  color: var(--navy);
-}
-.wg-rule-card .rule-desc {
-  font-size: 11px;
-  color: var(--gray-400);
-  margin-top: 2px;
-  line-height: 1.4;
-}
-
-.chart-wrapper {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 20px;
-}
-.chart-wrapper h4 {
-  font-size: 14px;
   font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 4px;
+  color: #F47920;
 }
-.chart-wrapper .chart-note {
-  font-size: 12px;
-  color: var(--gray-400);
-  margin-bottom: 16px;
-}
+.wg-rule-card .rule-desc { font-size: 10.5px; color: rgba(255,255,255,.75); margin-top: 3px; line-height: 1.4; }
 
-/* ─── WESTGARD VIOLATIONS ─── */
-.violations-list { margin-top: 12px; }
+/* ─── RUN SIZE BOX ─── */
+.runsize-box {
+  background: #003770;
+  border-radius: 10px;
+  padding: 18px 22px;
+  color: #FFFFFF;
+  margin-bottom: 18px;
+  border-left: 4px solid #F47920;
+}
+.runsize-box h4 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  color: #F47920;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.runsize-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.rs-item { text-align: center; }
+.rs-item .rs-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+.rs-item .rs-lbl { font-size: 10px; color: rgba(255,255,255,.55); margin-top: 2px; letter-spacing: .05em; text-transform: uppercase; }
+
+/* ─── CHART ─── */
+.chart-wrapper {
+  background: #FFFFFF;
+  border: 1.5px solid #C8D4E3;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+.chart-wrapper h4 { font-size: 13px; font-weight: 700; color: #003770; margin-bottom: 3px; }
+.chart-note { font-size: 11.5px; color: #6B7A8D; margin-bottom: 14px; }
+
+/* ─── VIOLATIONS ─── */
+.violations-list { margin-top: 10px; }
 .violation-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 7px 12px;
+  gap: 9px;
+  padding: 7px 11px;
   border-radius: 6px;
-  font-size: 13px;
-  margin-bottom: 6px;
+  font-size: 12.5px;
+  margin-bottom: 5px;
+  font-weight: 500;
 }
-.violation-item.warn { background: var(--amber-pale); color: #78350f; }
-.violation-item.reject { background: var(--red-pale); color: #7f1d1d; }
-.violation-item.ok { background: var(--green-pale); color: #064e3b; }
-.violation-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.violation-dot.warn { background: var(--amber); }
-.violation-dot.reject { background: var(--red); }
-.violation-dot.ok { background: var(--green); }
+.violation-item.warn  { background: #FFF3EA; color: #7A3200; border: 1px solid #F47920; }
+.violation-item.reject { background: #FEF0EE; color: #7F1D1D; border: 1px solid #C0392B; }
+.violation-item.ok    { background: #E8F0F9; color: #003770; border: 1px solid #004B8D; }
+.violation-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.violation-dot.warn   { background: #F47920; }
+.violation-dot.reject { background: #C0392B; }
+.violation-dot.ok     { background: #004B8D; }
 
-/* ─── REFERENCES PAGE ─── */
-.ref-grid { display: flex; flex-direction: column; gap: 8px; }
+/* ─── VERI DECISION ─── */
+.veri-accept    { background: #003770; color: #FFFFFF; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; border-left: 5px solid #F47920; }
+.veri-reject    { background: #C0392B; color: #FFFFFF; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+.veri-investigate { background: #F47920; color: #FFFFFF; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+
+/* ─── REFERENCES ─── */
+.ref-grid { display: flex; flex-direction: column; gap: 7px; }
 .ref-item {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: #FFFFFF;
+  border: 1.5px solid #C8D4E3;
   border-radius: 8px;
-  padding: 14px 18px;
+  padding: 12px 16px;
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 13px;
 }
 .ref-num {
   width: 28px; height: 28px;
-  background: var(--navy);
-  color: white;
+  background: #003770;
+  color: #FFFFFF;
   border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   flex-shrink: 0;
   margin-top: 1px;
 }
-.ref-content { flex: 1; }
-.ref-content .ref-title { font-size: 14px; font-weight: 600; color: var(--navy); line-height: 1.4; margin-bottom: 3px; }
-.ref-content .ref-body { font-size: 13px; color: var(--text-light); line-height: 1.5; }
-.ref-content .ref-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
-.ref-content a { color: var(--teal); text-decoration: none; font-size: 12px; }
-.ref-content a:hover { text-decoration: underline; }
+.ref-content .ref-title { font-size: 13.5px; font-weight: 700; color: #003770; line-height: 1.4; margin-bottom: 3px; }
+.ref-content .ref-body  { font-size: 12.5px; color: #4A5568; line-height: 1.5; }
+.ref-content a { color: #004B8D; text-decoration: none; font-weight: 600; }
+.ref-content a:hover { text-decoration: underline; color: #F47920; }
+.ref-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
 .region-note {
-  background: var(--amber-pale);
-  border: 1px solid #fde68a;
+  background: #FFF3EA;
+  border: 1.5px solid #F47920;
   border-radius: 8px;
   padding: 12px 16px;
   font-size: 13px;
-  color: #78350f;
-  margin-bottom: 20px;
+  color: #7A3200;
+  margin-bottom: 18px;
   display: flex;
   gap: 10px;
   align-items: flex-start;
-}
-
-/* ─── FORMULA DISPLAY ─── */
-.formula-box {
-  background: var(--navy);
-  border-radius: 8px;
-  padding: 16px 20px;
-  margin: 12px 0;
-  text-align: center;
-}
-.formula-box .formula-text {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 18px;
-  color: var(--teal-light);
   font-weight: 500;
 }
-.formula-box .formula-caption {
-  font-size: 12px;
-  color: rgba(255,255,255,.5);
-  margin-top: 6px;
-}
 
-/* ─── ERROR / EMPTY ─── */
+/* ─── CHECKLISTS ─── */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 5px 0;
+  font-size: 13.5px;
+  color: #2D3748;
+}
+.checklist li::before { content: '☐'; font-size: 16px; flex-shrink: 0; color: #F47920; margin-top: 1px; }
+
+/* ─── ERROR MSG ─── */
 .error-msg {
-  background: var(--red-pale);
-  border: 1px solid #fca5a5;
+  background: #FEF0EE;
+  border: 1.5px solid #C0392B;
   border-radius: 7px;
-  padding: 10px 14px;
+  padding: 9px 13px;
   font-size: 13px;
-  color: #991b1b;
-  margin-top: 10px;
+  color: #7F1D1D;
+  margin-top: 9px;
   display: none;
+  font-weight: 500;
 }
 
-/* ─── PROGRESS TRACK ─── */
-.progress-track {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin-bottom: 28px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-.pt-step {
-  display: flex;
-  align-items: center;
-}
-.pt-dot {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  background: var(--gray-100);
-  border: 2px solid var(--gray-200);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--gray-400);
-  flex-shrink: 0;
-  cursor: pointer;
-  transition: all .2s;
-  font-family: 'IBM Plex Mono', monospace;
-}
-.pt-dot.done { background: var(--green-pale); border-color: var(--green); color: var(--green); }
-.pt-dot.current { background: var(--teal); border-color: var(--teal); color: white; }
-.pt-line { width: 32px; height: 2px; background: var(--gray-200); flex-shrink: 0; }
-.pt-line.done { background: var(--green); }
-
-/* ─── MOBILE ─── */
-@media (max-width: 768px) {
-  #sidebar { transform: translateX(-100%); }
-  #main { margin-left: 0; }
-  .section-page { padding: 24px 20px; }
-  .form-row, .form-row-3 { grid-template-columns: 1fr; }
-  .results-grid { grid-template-columns: 1fr 1fr; }
-  .wg-rule-grid { grid-template-columns: 1fr 1fr; }
-  .intro-grid { grid-template-columns: 1fr; }
-  .sigma-value-big { font-size: 36px; }
-}
-
-/* Tooltip */
+/* ─── TOOLTIP ─── */
 .tooltip-wrap { position: relative; display: inline-block; }
 .tooltip-trigger {
   display: inline-flex;
@@ -876,8 +862,8 @@ nav { padding: 16px 0; flex: 1; }
   justify-content: center;
   width: 16px; height: 16px;
   border-radius: 50%;
-  background: var(--gray-200);
-  color: var(--gray-600);
+  background: #004B8D;
+  color: #FFFFFF;
   font-size: 10px;
   font-weight: 700;
   cursor: help;
@@ -890,8 +876,8 @@ nav { padding: 16px 0; flex: 1; }
   bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
-  background: var(--navy);
-  color: white;
+  background: #003770;
+  color: #FFFFFF;
   font-size: 12px;
   line-height: 1.5;
   padding: 8px 12px;
@@ -900,44 +886,65 @@ nav { padding: 16px 0; flex: 1; }
   width: 220px;
   z-index: 200;
   pointer-events: none;
+  border: 1px solid #F47920;
 }
 .tooltip-wrap:hover .tooltip-box { display: block; }
 
-/* Coagulation special table */
-.coag-table-wrap { overflow-x: auto; margin: 12px 0; }
-
-.highlight-row td:first-child { border-left: 3px solid var(--teal); }
-
-/* Levey-Jennings canvas */
-#ljChart { max-height: 300px; }
-
-/* Run size recommendation box */
-.runsize-box {
-  background: linear-gradient(135deg, var(--navy-light), var(--navy));
+/* ─── PDF REPORT BOX ─── */
+.pdf-report-section {
+  background: #F0F4F8;
+  border: 1.5px solid #C8D4E3;
   border-radius: 10px;
-  padding: 20px 24px;
-  color: white;
-  margin-bottom: 20px;
+  padding: 16px 20px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
-.runsize-box h4 {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--teal-light);
-  margin-bottom: 10px;
+.pdf-report-section .pdf-info { flex: 1; }
+.pdf-report-section .pdf-info h4 { font-size: 14px; font-weight: 700; color: #003770; margin-bottom: 3px; }
+.pdf-report-section .pdf-info p { font-size: 12.5px; color: #4A5568; }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width: 768px) {
+  #sidebar { transform: translateX(-100%); }
+  #main { margin-left: 0; }
+  .section-page { padding: 20px 16px; }
+  .form-row, .form-row-3 { grid-template-columns: 1fr; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .wg-rule-grid { grid-template-columns: 1fr 1fr; }
+  .intro-grid { grid-template-columns: 1fr; }
+  .quick-grid { grid-template-columns: 1fr; }
+  .sigma-value-big { font-size: 36px; }
+  .runsize-grid { grid-template-columns: 1fr 1fr; }
+  .pdf-report-section { flex-direction: column; }
 }
-.runsize-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
-.rs-item { text-align: center; }
-.rs-item .rs-val {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 24px;
-  font-weight: 600;
-  color: white;
+
+/* ─── S4 RESULTS SINGLE COLUMN ─── */
+#s4 .results-grid,
+#s4 .rg4 {
+  grid-template-columns: repeat(2, 1fr);
 }
-.rs-item .rs-lbl { font-size: 11px; color: rgba(255,255,255,.55); margin-top: 2px; letter-spacing: .04em; text-transform: uppercase; }
+#s4 #veri_decision,
+#s4 #veri_stats {
+  width: 100%;
+}
+
+/* ─── PRINT / PDF STYLES ─── */
+@media print {
+  #sidebar { display: none !important; }
+  #main { margin-left: 0 !important; }
+  .section-page { display: block !important; padding: 20px !important; }
+  .btn-primary, .btn-secondary, .btn-orange, .pdf-report-section { display: none !important; }
+  .step-body { display: block !important; }
+  body { background: #fff !important; }
+}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 </head>
-<body>
+<body style="background:#ffffff;">
 
 <!-- ════════════════ SIDEBAR ════════════════ -->
 <div id="sidebar">
@@ -1039,7 +1046,7 @@ nav { padding: 16px 0; flex: 1; }
         <div class="intro-card">
           <h4>Concepto clave: Sigma Métrica</h4>
           <p>La Sigma Métrica (σ) mide la calidad del método analítico en "sigmas". Un valor σ ≥ 6 indica un método de clase mundial; σ &lt; 3 indica que el método necesita mejoras urgentes.</p>
-          <p style="margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#22bba8;">σ = (TEa − Sesgo%) / CV%</p>
+          <p style="margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#F47920;">σ = (TEa − Sesgo%) / CV%</p>
         </div>
         <div class="intro-card">
           <h4>Materiales de control en coagulación</h4>
@@ -1064,31 +1071,31 @@ nav { padding: 16px 0; flex: 1; }
   </div>
 
   <!-- Quick access cards -->
-  <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:16px;">¿Por dónde quieres empezar?</h3>
+  <h3 style="font-size:15px;font-weight:700;color:#003770;margin-bottom:16px;">¿Por dónde quieres empezar?</h3>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:32px;">
-    <div onclick="showSection('s1')" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:var(--shadow);" onmouseover="this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.boxShadow='var(--shadow)'">
+    <div onclick="showSection('s1')" style="background:#ffffff;border:1px solid #dde3ed;border-radius:10px;padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);" onmouseover="this.style.boxShadow='0 4px 6px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.09)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)'">
       <div style="font-size:28px;margin-bottom:10px;">🔬</div>
-      <div style="font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;">Tengo un nuevo lote de control</div>
-      <div style="font-size:13px;color:var(--text-light);">Guía paso a paso: solapamiento, cálculo de media/DE, establecimiento de límites Levey-Jennings.</div>
-      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal);">→ 7 pasos · ISO 15189 · CLSI C24</div>
+      <div style="font-weight:700;font-size:15px;color:#003770;margin-bottom:4px;">Tengo un nuevo lote de control</div>
+      <div style="font-size:13px;color:#3d4a5c;">Guía paso a paso: solapamiento, cálculo de media/DE, establecimiento de límites Levey-Jennings.</div>
+      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:#004B8D;">→ 7 pasos · ISO 15189 · CLSI C24</div>
     </div>
-    <div onclick="showSection('s2')" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:var(--shadow);" onmouseover="this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.boxShadow='var(--shadow)'">
+    <div onclick="showSection('s2')" style="background:#ffffff;border:1px solid #dde3ed;border-radius:10px;padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);" onmouseover="this.style.boxShadow='0 4px 6px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.09)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)'">
       <div style="font-size:28px;margin-bottom:10px;">⚗️</div>
-      <div style="font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;">Tengo un nuevo lote de reactivo</div>
-      <div style="font-size:13px;color:var(--text-light);">Verificación lote a lote: medición en paralelo, análisis estadístico, árbol de decisión.</div>
-      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal);">→ 8 pasos · CLSI EP26-A · ICSH 2024</div>
+      <div style="font-weight:700;font-size:15px;color:#003770;margin-bottom:4px;">Tengo un nuevo lote de reactivo</div>
+      <div style="font-size:13px;color:#3d4a5c;">Verificación lote a lote: medición en paralelo, análisis estadístico, árbol de decisión.</div>
+      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:#004B8D;">→ 8 pasos · CLSI EP26-A · ICSH 2024</div>
     </div>
-    <div onclick="showSection('s3')" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:var(--shadow);" onmouseover="this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.boxShadow='var(--shadow)'">
+    <div onclick="showSection('s3')" style="background:#ffffff;border:1px solid #dde3ed;border-radius:10px;padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);" onmouseover="this.style.boxShadow='0 4px 6px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.09)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)'">
       <div style="font-size:28px;margin-bottom:10px;">📊</div>
-      <div style="font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;">Quiero calcular mi Sigma Métrica</div>
-      <div style="font-size:13px;color:var(--text-light);">Pega tu corrida de QC y obtén: media, DE, CV%, Sigma, gráfico Levey-Jennings y reglas recomendadas.</div>
-      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal);">→ Calculadora interactiva completa</div>
+      <div style="font-weight:700;font-size:15px;color:#003770;margin-bottom:4px;">Quiero calcular mi Sigma Métrica</div>
+      <div style="font-size:13px;color:#3d4a5c;">Pega tu corrida de QC y obtén: media, DE, CV%, Sigma, gráfico Levey-Jennings y reglas recomendadas.</div>
+      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:#004B8D;">→ Calculadora interactiva completa</div>
     </div>
-    <div onclick="showSection('s4')" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:var(--shadow);" onmouseover="this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.boxShadow='var(--shadow)'">
+    <div onclick="showSection('s4')" style="background:#ffffff;border:1px solid #dde3ed;border-radius:10px;padding:20px;cursor:pointer;transition:box-shadow .2s;box-shadow:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);" onmouseover="this.style.boxShadow='0 4px 6px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.09)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)'">
       <div style="font-size:28px;margin-bottom:10px;">🔁</div>
-      <div style="font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;">Quiero verificar un cambio de lote</div>
-      <div style="font-size:13px;color:var(--text-light);">Compara lote viejo vs. nuevo: calcula sesgo, aplica criterios de aceptación y decide con base en evidencia.</div>
-      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--teal);">→ Sesgo · t-test pareado · Bland-Altman</div>
+      <div style="font-weight:700;font-size:15px;color:#003770;margin-bottom:4px;">Quiero verificar un cambio de lote</div>
+      <div style="font-size:13px;color:#3d4a5c;">Compara lote viejo vs. nuevo: calcula sesgo, aplica criterios de aceptación y decide con base en evidencia.</div>
+      <div style="margin-top:12px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:#004B8D;">→ Sesgo · t-test pareado · Bland-Altman</div>
     </div>
   </div>
 </div>
@@ -1320,8 +1327,12 @@ nav { padding: 16px 0; flex: 1; }
           </tbody>
         </table>
 
+        <div style="background:#e8f0f9;border-left:3px solid #004B8D;border-radius:0 6px 6px 0;padding:8px 12px;margin:8px 0;font-size:12px;color:#003770;">
+          <strong>📖 Fuentes de esta tabla:</strong> CLSI C24-Ed4 Tabla 3 · Schoenmakers CH et al. <em>Clin Chem Lab Med</em> 2011;49(11):1837–43 · Westgard JO et al. <em>Clin Chem</em> 2018;64(2):289–96.
+        </div>
+
         <div class="info-box">
-          <strong>¿No sabes tu Sigma?</strong> Usa la <a onclick="showSection('s3')" style="color:var(--teal);cursor:pointer;font-weight:600;">Calculadora de Sigma Métrica</a> de esta guía. Solo necesitas tu TEa, sesgo y CV%.
+          <strong>¿No sabes tu Sigma?</strong> Usa la <a onclick="showSection('s3')" style="color:#004B8D;cursor:pointer;font-weight:600;">Calculadora de Sigma Métrica</a> de esta guía. Solo necesitas tu TEa, sesgo y CV%.
         </div>
         <div class="source-box">
           <div class="src-label">📖 Fuente normativa</div>
@@ -1418,23 +1429,23 @@ nav { padding: 16px 0; flex: 1; }
   </div>
 
   <!-- Árbol de decisión -->
-  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;box-shadow:var(--shadow);">
-    <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;">🌲 Árbol de decisión rápido</h3>
+  <div style="background:#ffffff;border:1px solid #dde3ed;border-radius:10px;padding:18px 20px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);">
+    <h3 style="font-size:14px;font-weight:700;color:#003770;margin-bottom:12px;">🌲 Árbol de decisión rápido</h3>
     <div class="decision-tree">
       <div class="dt-node">
         <div class="dt-diamond"></div>
         <div class="dt-text">¿El sesgo observado entre lote nuevo y lote anterior supera el <strong>límite de rechazo</strong> (0.6 × DC)?</div>
       </div>
       <div class="dt-indent">
-        <div style="margin:4px 0;color:var(--green);font-weight:600;">✗ NO → <span class="dt-action accept">✔ Aceptar el nuevo lote</span> — documentar y poner en uso</div>
-        <div style="margin:8px 0;color:var(--red);font-weight:600;">✓ SÍ → Continuar evaluando ▾</div>
+        <div style="margin:4px 0;color:#2e7d32;font-weight:600;">✗ NO → <span class="dt-action accept">✔ Aceptar el nuevo lote</span> — documentar y poner en uso</div>
+        <div style="margin:8px 0;color:#c0392b;font-weight:600;">✓ SÍ → Continuar evaluando ▾</div>
         <div class="dt-node" style="padding-left:16px;">
-          <div class="dt-diamond" style="background:var(--navy-light);"></div>
+          <div class="dt-diamond" style="background:#1a6ab5;"></div>
           <div class="dt-text">¿Existe causa técnica identificable (calibración, temperatura, estabilidad del reactivo)?</div>
         </div>
         <div style="padding-left:54px;">
-          <div style="margin:4px 0;color:var(--green);font-weight:600;">✓ SÍ → <span class="dt-action investigate">🔍 Corregir causa y re-evaluar</span></div>
-          <div style="margin:4px 0;color:var(--red);font-weight:600;">✗ NO → <span class="dt-action reject">✗ Rechazar el lote</span> — Contactar al fabricante · Documentar no conformidad</div>
+          <div style="margin:4px 0;color:#2e7d32;font-weight:600;">✓ SÍ → <span class="dt-action investigate">🔍 Corregir causa y re-evaluar</span></div>
+          <div style="margin:4px 0;color:#c0392b;font-weight:600;">✗ NO → <span class="dt-action reject">✗ Rechazar el lote</span> — Contactar al fabricante · Documentar no conformidad</div>
         </div>
       </div>
     </div>
@@ -1552,7 +1563,7 @@ nav { padding: 16px 0; flex: 1; }
           <li>Medir las muestras seleccionadas con el <strong>lote A (actual) y lote B (nuevo)</strong>, en el mismo equipo, el mismo día y en las mismas condiciones.</li>
           <li>Medir también los <strong>materiales de control interno</strong> (al menos 2 niveles) con ambos lotes.</li>
           <li>El orden de medición debe ser alternado (A, B, A, B...) para evitar efectos de drift temporal.</li>
-          <li>Registrar todos los resultados en la <a onclick="showSection('s4')" style="color:var(--teal);cursor:pointer;font-weight:600;">Calculadora de Verificación de Lote</a> de esta guía.</li>
+          <li>Registrar todos los resultados en la <a onclick="showSection('s4')" style="color:#004B8D;cursor:pointer;font-weight:600;">Calculadora de Verificación de Lote</a> de esta guía.</li>
         </ul>
         <div class="warning-box">
           No calibrar el nuevo lote antes de la medición paralela si no es requerido por el fabricante. Calibrar DESPUÉS de aceptar el lote si corresponde.
@@ -1588,7 +1599,7 @@ nav { padding: 16px 0; flex: 1; }
           <li>Si la diferencia es ≥1 DE: considerar establecer nuevo valor diana para el control con el nuevo lote.</li>
         </ul>
         <div class="info-box">
-          <strong>💡 Usa la <a onclick="showSection('s4')" style="color:var(--teal);cursor:pointer;font-weight:600;">Calculadora de Verificación de Lote</a></strong> para introducir los datos de ambos lotes y obtener automáticamente el sesgo%, el resultado del t-test y la recomendación de aceptar/rechazar.
+          <strong>💡 Usa la <a onclick="showSection('s4')" style="color:#004B8D;cursor:pointer;font-weight:600;">Calculadora de Verificación de Lote</a></strong> para introducir los datos de ambos lotes y obtener automáticamente el sesgo%, el resultado del t-test y la recomendación de aceptar/rechazar.
         </div>
         <div class="source-box">
           <div class="src-label">📖 Fuente normativa</div>
@@ -1674,7 +1685,39 @@ nav { padding: 16px 0; flex: 1; }
   </div>
 
   <!-- FASE 1: Datos de QC -->
-  <div class="calc-section">
+    <!-- ── IDENTIFICACIÓN DEL CONTROL ── -->
+  <div class="calc-section" id="id_block_sigma">
+    <div class="calc-header">
+      <div class="calc-icon">🏷️</div>
+      <h3>Identificación del control — completa antes de calcular</h3>
+    </div>
+    <div class="calc-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Número de lote del material de control</label>
+          <input type="text" id="lote_control" placeholder="ej: LOT-2024-001">
+          <div class="help">Número de lote impreso en el vial o en la hoja de valores del fabricante</div>
+        </div>
+        <div class="form-group">
+          <label>Nombre / referencia del control</label>
+          <input type="text" id="nombre_control" placeholder="ej: HemosIL Coagulation Control Level 1, HemosIL Coagulation Control Level 2...">
+          <div class="help">Nombre comercial y nivel del material de control</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Equipo / analizador</label>
+          <input type="text" id="equipo_sigma" placeholder="ej: ACL TOP 750 LAS, ACL TOP 500, CS-5100...">
+        </div>
+        <div class="form-group">
+          <label>Responsable del análisis</label>
+          <input type="text" id="responsable_sigma" placeholder="Nombre y categoría profesional">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="calc-section">
     <div class="calc-header">
       <div class="calc-icon">📥</div>
       <h3>Fase 1 — Datos de la corrida de QC</h3>
@@ -1700,9 +1743,11 @@ nav { padding: 16px 0; flex: 1; }
           <span class="tooltip-wrap"><span class="tooltip-trigger">?</span><span class="tooltip-box">Pega los valores directamente desde Excel (una columna). Separa con comas, punto y coma, espacios o saltos de línea. Se aceptan valores con punto o coma decimal.</span></span>
         </label>
         <textarea id="qc_valores" placeholder="Pega aquí los valores de tu corrida de QC.&#10;Puedes pegar desde Excel (una columna), separados por comas, punto y coma o saltos de línea.&#10;&#10;Ejemplo:&#10;13.2&#10;12.8&#10;13.5&#10;12.9&#10;13.1"></textarea>
-        <div class="help">Mínimo 10 valores recomendados. Acepta coma o punto como decimal.</div>
+        <div class="help" style="background:#fff3ea;border-left:2px solid #F47920;padding:6px 10px;border-radius:0 5px 5px 0;color:#7a3200;margin-top:4px;">
+          ⚠️ <strong>Mínimo real: 20 valores en 20 días distintos (CLSI C24-Ed4).</strong> Con 10–19 valores obtendrás estadísticos <em>orientativos provisionales</em> que pueden subestimar la DE real hasta un 30–40%; los límites resultantes deben marcarse como provisionales y revisarse al completar los 20 datos. Acepta coma o punto decimal.
+        </div>
       </div>
-      <div id="error_fase1" class="error-msg">Por favor introduce al menos 5 valores numéricos válidos.</div>
+      <div id="error_fase1" class="error-msg">Introduce al menos 5 valores. Recuerda: con menos de 20 los resultados son solo orientativos.</div>
       <div class="btn-row">
         <button class="btn-primary" onclick="calcularFase1()">🧮 Calcular estadísticos</button>
         <button class="btn-secondary" onclick="cargarEjemplo()">📋 Cargar datos de ejemplo</button>
@@ -1768,6 +1813,15 @@ nav { padding: 16px 0; flex: 1; }
       <canvas id="ljChart"></canvas>
     </div>
     <div id="violations_display"></div>
+    <div id="pdf_sigma_section" style="display:none;margin-top:12px;">
+      <div class="pdf-report-section">
+        <div class="pdf-info">
+          <h4>📄 Generar informe de auditoria</h4>
+          <p>Exporta estadisticos, Sigma Metrica, Westgard y datos de la corrida a PDF con fecha para auditoria ISO 15189.</p>
+        </div>
+        <button class="btn-orange" onclick="generarPDFSigma()">🖨️ Exportar informe PDF</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1779,6 +1833,37 @@ nav { padding: 16px 0; flex: 1; }
     <p class="subtitle">Introduce los resultados del lote actual (A) y del nuevo lote (B) medidos en las mismas muestras. La calculadora determina el sesgo, aplica el t-test pareado y emite una recomendación de aceptar o rechazar según el criterio definido (CLSI EP26-A).</p>
   </div>
 
+  <!-- IDENTIFICACIÓN -->
+  <div class="calc-section">
+    <div class="calc-header">
+      <div class="calc-icon">🏷️</div>
+      <h3>Identificación del cambio de lote</h3>
+    </div>
+    <div class="calc-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Número de lote A (lote actual / saliente)</label>
+          <input type="text" id="lote_A_id" placeholder="ej: LOT-2024-005">
+        </div>
+        <div class="form-group">
+          <label>Número de lote B (lote nuevo / entrante)</label>
+          <input type="text" id="lote_B_id" placeholder="ej: LOT-2024-006">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Reactivo verificado</label>
+          <input type="text" id="nombre_reactivo" placeholder="ej: HemosIL RecombiPlasTin 2G, HemosIL SynthASil...">
+        </div>
+        <div class="form-group">
+          <label>Equipo / analizador</label>
+          <input type="text" id="equipo_veri" placeholder="ej: ACL TOP 750 LAS, ACL TOP 500, CS-5100...">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS -->
   <div class="calc-section">
     <div class="calc-header">
       <div class="calc-icon">⚗️</div>
@@ -1787,26 +1872,24 @@ nav { padding: 16px 0; flex: 1; }
     <div class="calc-body">
       <div class="form-row">
         <div class="form-group">
-          <label>Analito</label>
-          <input type="text" id="v_analito" placeholder="ej: TP segundos, INR, Fibrinógeno...">
+          <label>Analito / Prueba</label>
+          <input type="text" id="v_analito" placeholder="ej: TP segundos, INR, Fibrinogeno...">
         </div>
         <div class="form-group">
-          <label>%TEa (criterio de aceptación)</label>
+          <label>%TEa (criterio de aceptacion)</label>
           <input type="number" id="v_tea" placeholder="ej: 15" step="0.1">
-          <div class="help">Límite de rechazo = 0.6 × (1/3 × TEa) = 0.2 × TEa</div>
+          <div class="help">Limite de rechazo = 0.2 x TEa (CLSI EP26-A)</div>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Resultados Lote A (actual)</label>
-          <textarea id="v_loteA" placeholder="Pega los valores del lote actual.&#10;Un valor por línea o separados por comas.&#10;&#10;Ejemplo:&#10;13.2&#10;14.5&#10;11.8&#10;16.2&#10;12.9" style="min-height:100px;"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Resultados Lote B (nuevo)</label>
-          <textarea id="v_loteB" placeholder="Pega los valores del nuevo lote.&#10;Mismo orden que los del Lote A (mismas muestras).&#10;&#10;Ejemplo:&#10;13.5&#10;14.8&#10;12.1&#10;16.5&#10;13.2" style="min-height:100px;"></textarea>
-        </div>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label>Resultados Lote A (actual) — un valor por linea</label>
+        <textarea id="v_loteA" placeholder="Pega los valores del lote actual, un valor por linea&#10;&#10;Ejemplo:&#10;13.2&#10;14.5&#10;11.8&#10;16.2&#10;12.9" style="min-height:110px;"></textarea>
       </div>
-      <div id="error_veri" class="error-msg">Error en los datos. Verifica que ambas columnas tienen el mismo número de valores numéricos (mínimo 3).</div>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label>Resultados Lote B (nuevo) — mismo orden que Lote A</label>
+        <textarea id="v_loteB" placeholder="Pega los valores del nuevo lote, mismo orden que Lote A&#10;&#10;Ejemplo:&#10;13.5&#10;14.8&#10;12.1&#10;16.5&#10;13.2" style="min-height:110px;"></textarea>
+      </div>
+      <div id="error_veri" class="error-msg">Error: ambas columnas deben tener el mismo numero de valores (minimo 3 pares).</div>
       <div class="btn-row">
         <button class="btn-primary" onclick="calcularVerificacion()">🔬 Analizar cambio de lote</button>
         <button class="btn-secondary" onclick="cargarEjemploVeri()">📋 Cargar ejemplo (TP)</button>
@@ -1814,15 +1897,26 @@ nav { padding: 16px 0; flex: 1; }
     </div>
   </div>
 
+  <!-- RESULTADOS -->
   <div id="resultados_veri" class="results-panel">
     <div id="veri_decision"></div>
     <div id="veri_stats"></div>
-    <div class="chart-wrapper" id="veri_chart_wrapper">
-      <h4>Gráfico de Bland-Altman</h4>
-      <div class="chart-note">Eje X: Media de Lote A y B · Eje Y: Diferencia (B − A). Los puntos fuera de los límites de acuerdo (±1.96 DE) indican posibles problemas.</div>
+    <div class="chart-wrapper" id="veri_chart_wrapper" style="display:none;">
+      <h4>Grafico de Bland-Altman</h4>
+      <div class="chart-note">Eje X: Media (A+B)/2 — Eje Y: Diferencia (B-A). Puntos fuera de las lineas rojas (+/-1.96 DE) indican problemas de concordancia.</div>
       <canvas id="baChart" style="max-height:280px;"></canvas>
     </div>
+    <div id="pdf_veri_section" style="display:none;margin-top:12px;">
+      <div class="pdf-report-section">
+        <div class="pdf-info">
+          <h4>📄 Generar informe de auditoria</h4>
+          <p>Exporta la verificacion de cambio de lote con sesgo, t-test y decision a PDF con fecha para auditoria ISO 15189 / CLSI EP26-A.</p>
+        </div>
+        <button class="btn-orange" onclick="generarPDFVeri()">🖨️ Exportar informe PDF</button>
+      </div>
+    </div>
   </div>
+
 </div>
 
 <!-- ══════ SECCIÓN 5: REFERENCIAS ══════ -->
@@ -1938,7 +2032,7 @@ nav { padding: 16px 0; flex: 1; }
     <p class="subtitle">TEa, reglas de Westgard, frecuencia de control y valores de referencia para pruebas de coagulación y hematología.</p>
   </div>
 
-  <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">TEa recomendado por analito — Hematología y Coagulación</h3>
+  <h3 style="font-size:16px;font-weight:700;color:#003770;margin-bottom:14px;">TEa recomendado por analito — Hematología y Coagulación</h3>
   <div style="overflow-x:auto;margin-bottom:28px;">
   <table class="data-table">
     <thead><tr><th>Analito</th><th>TEa (EFLM deseable)</th><th>TEa (CLIA / programa ECA)</th><th>TEa (ICSH / impacto clínico)</th><th>Fuente prioritaria</th></tr></thead>
@@ -1958,7 +2052,14 @@ nav { padding: 16px 0; flex: 1; }
   </table>
   </div>
 
-  <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">Sigma Métrica → Estrategia de control recomendada</h3>
+<div style="background:#fff3ea;border-left:3px solid #F47920;border-radius:0 7px 7px 0;padding:9px 14px;margin-bottom:20px;font-size:12.5px;color:#7a3200;">
+    <strong>📖 Fuentes — Tabla TEa por analito:</strong><br>
+    • <strong>EFLM Biological Variation Database</strong> — <a href="https://biologicalvariation.eu" target="_blank" style="color:#004B8D;">biologicalvariation.eu</a> (2023) — fuente primaria para TEa deseable; prioridad en España según SEQCML.<br>
+    • Ricos C et al. <em>Scand J Clin Lab Invest</em> 1999;59:491–500 — base histórica de referencia de variabilidad biológica.<br>
+    • ICSH 2024 "New Lot Verification of Coagulation Reagents" — criterios específicos para coagulación.<br>
+    • SEQCML: Especificaciones de calidad analítica para laboratorios clínicos españoles.
+  </div>
+    <h3 style="font-size:16px;font-weight:700;color:#003770;margin-bottom:14px;">Sigma Métrica → Estrategia de control recomendada</h3>
   <div style="overflow-x:auto;margin-bottom:28px;">
   <table class="data-table">
     <thead><tr><th>Sigma (σ)</th><th>Calidad del método</th><th>Reglas de Westgard</th><th>N controles/corrida</th><th>R corridas</th><th>Tamaño máx. de lote</th><th>Acción</th></tr></thead>
@@ -1972,7 +2073,15 @@ nav { padding: 16px 0; flex: 1; }
   </table>
   </div>
 
-  <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">Reglas de Westgard — Referencia completa</h3>
+  <div style="background:#e8f0f9;border-left:3px solid #004B8D;border-radius:0 7px 7px 0;padding:9px 14px;margin-bottom:20px;font-size:12.5px;color:#003770;">
+    <strong>📖 Fuentes — Tabla Sigma Métrica → Reglas → Frecuencia:</strong><br>
+    • <strong>CLSI C24-Ed4 Tabla 3:</strong> "Westgard Sigma Rule Selection Chart" — asignación oficial de reglas por nivel sigma.<br>
+    • Schoenmakers CH et al. <em>Clin Chem Lab Med</em> 2011;49(11):1837–43 — base sigma ↔ reglas Westgard.<br>
+    • Song Z et al. <em>Clin Chem Lab Med</em> 2022;60(11):1729–35 — validación con variabilidad biológica EFLM.<br>
+    • Westgard JO, Bayat H, Westgard SA. <em>Clin Chem</em> 2018;64(2):289–96 — tamaño de lote y frecuencia basados en riesgo.
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:#003770;margin-bottom:14px;">Reglas de Westgard — Referencia completa</h3>
   <div style="overflow-x:auto;">
   <table class="data-table">
     <thead><tr><th>Regla</th><th>Criterio de activación</th><th>Tipo de error que detecta</th><th>Acción recomendada</th></tr></thead>
@@ -2089,11 +2198,11 @@ function checkWestgard(arr, mean, sd) {
 
 // ─── SIGMA CONFIG ───
 function getSigmaConfig(sigma) {
-  if(sigma>=6) return { cls:'sigma-world', label:'World Class (≥6σ)', desc:'Calidad de clase mundial. Método con excelente desempeño analítico.', rules:['1₃ₛ'], N:2, R:1, lote:1000 };
-  if(sigma>=5) return { cls:'sigma-excellent', label:'Excelente (5–6σ)', desc:'Método de alto desempeño. Control estándar con mínima intervención.', rules:['1₃ₛ','2₂ₛ'], N:2, R:1, lote:450 };
-  if(sigma>=4) return { cls:'sigma-good', label:'Bueno (4–5σ)', desc:'Buen desempeño. Monitorización reforzada con múltiples reglas.', rules:['1₃ₛ','2₂ₛ','R₄ₛ'], N:4, R:1, lote:200 };
-  if(sigma>=3) return { cls:'sigma-marginal', label:'Marginal (3–4σ)', desc:'Desempeño marginal. Control intensivo. Evaluar mejoras en el método.', rules:['1₃ₛ','2₂ₛ','R₄ₛ','4₁ₛ'], N:6, R:2, lote:45 };
-  return { cls:'sigma-poor', label:'Inaceptable (<3σ)', desc:'El método no cumple los requisitos mínimos de calidad. No reportar resultados. Mejorar el método antes de continuar.', rules:[], N:0, R:0, lote:0 };
+  if(sigma>=6) return { cls:'sigma-world', label:'World Class (>=6 sigma)', labelDisp:'World Class (≥6σ)', desc:'Calidad de clase mundial. Método con excelente desempeño analítico.', rules:['1₃ₛ'], rulesPlain:['1-3s'], N:2, R:1, lote:1000 };
+  if(sigma>=5) return { cls:'sigma-excellent', label:'Excelente (5-6 sigma)', labelDisp:'Excelente (5–6σ)', desc:'Método de alto desempeño. Control estándar con mínima intervención.', rules:['1₃ₛ','2₂ₛ'], rulesPlain:['1-3s','2-2s'], N:2, R:1, lote:450 };
+  if(sigma>=4) return { cls:'sigma-good', label:'Bueno (4-5 sigma)', labelDisp:'Bueno (4–5σ)', desc:'Buen desempeño. Monitorización reforzada con múltiples reglas.', rules:['1₃ₛ','2₂ₛ','R₄ₛ'], rulesPlain:['1-3s','2-2s','R-4s'], N:4, R:1, lote:200 };
+  if(sigma>=3) return { cls:'sigma-marginal', label:'Marginal (3-4 sigma)', labelDisp:'Marginal (3–4σ)', desc:'Desempeño marginal. Control intensivo. Evaluar mejoras en el método.', rules:['1₃ₛ','2₂ₛ','R₄ₛ','4₁ₛ'], rulesPlain:['1-3s','2-2s','R-4s','4-1s'], N:6, R:2, lote:45 };
+  return { cls:'sigma-poor', label:'Inaceptable (<3 sigma)', labelDisp:'Inaceptable (<3σ)', desc:'El método no cumple los requisitos mínimos de calidad. No reportar resultados. Mejorar el método antes de continuar.', rules:[], rulesPlain:[], N:0, R:0, lote:0 };
 }
 
 let ljChartInstance = null;
@@ -2115,7 +2224,7 @@ function calcularFase1() {
     <div class="result-card"><div class="rc-label">N (datos)</div><div class="rc-value">${s.n}</div><div class="rc-unit">determinaciones</div></div>
     <div class="result-card"><div class="rc-label">Media (X̄)</div><div class="rc-value">${s.mean.toFixed(3)}</div><div class="rc-unit">unidades</div></div>
     <div class="result-card"><div class="rc-label">DE</div><div class="rc-value">${s.sd.toFixed(3)}</div><div class="rc-unit">desv. estándar</div></div>
-    <div class="result-card"><div class="rc-label">CV%</div><div class="rc-value ${s.cv<5?'':''}"; style="color:${s.cv<3?'var(--green)':s.cv<5?'var(--amber)':'var(--red)'};">${s.cv.toFixed(2)}</div><div class="rc-unit">coef. variación</div></div>
+    <div class="result-card"><div class="rc-label">CV%</div><div class="rc-value ${s.cv<5?'':''}"; style="color:${s.cv<3?'#2e7d32':s.cv<5?'#F47920':'#c0392b'};">${s.cv.toFixed(2)}</div><div class="rc-unit">coef. variación</div></div>
     <div class="result-card"><div class="rc-label">Mín / Máx</div><div class="rc-value" style="font-size:16px;">${s.min.toFixed(2)} / ${s.max.toFixed(2)}</div><div class="rc-unit">rango</div></div>
     <div class="result-card"><div class="rc-label">X̄ ± 2DE</div><div class="rc-value" style="font-size:16px;">${(s.mean-2*s.sd).toFixed(2)} – ${(s.mean+2*s.sd).toFixed(2)}</div><div class="rc-unit">límites aviso</div></div>
   `;
@@ -2147,7 +2256,7 @@ function calcularSigma() {
     <div class="sigma-display ${cfg.cls}">
       <div class="sigma-value-big"><span class="sigma-sym">σ</span>${sigma.toFixed(1)}</div>
       <div class="sigma-info">
-        <div class="sigma-label">${cfg.label}</div>
+        <div class="sigma-label">${cfg.labelDisp || cfg.label}</div>
         <div class="sigma-desc">${cfg.desc}<br><br>
         <strong style="color:rgba(255,255,255,.9);">Fórmula:</strong> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">(${tea}% TEa − ${sesgo}% Sesgo) / ${cv.toFixed(2)}% CV = ${sigma.toFixed(2)}σ</span>
         <br><small style="color:rgba(255,255,255,.6);font-size:11px;">Fuente TEa: ${fuenteTea}</small>
@@ -2194,9 +2303,9 @@ function calcularSigma() {
 
   const pointColors = vals.map(v=>{
     const z = Math.abs((v-s.mean)/s.sd);
-    if(z>3) return '#d94f3d';
-    if(z>2) return '#e8a838';
-    return '#1a9b8a';
+    if(z>3) return '#c0392b';
+    if(z>2) return '#F47920';
+    return '#004B8D';
   });
 
   document.getElementById('lj_note').textContent = `${analito} · Nivel ${nivel} · Media=${s.mean.toFixed(3)}, DE=${s.sd.toFixed(3)}, CV=${s.cv.toFixed(2)}%`;
@@ -2208,12 +2317,12 @@ function calcularSigma() {
     data:{
       labels,
       datasets:[
-        { label:'Resultados QC', data:vals, borderColor:'#1a9b8a', backgroundColor:pointColors, pointBackgroundColor:pointColors, pointRadius:6, pointHoverRadius:8, tension:0.3, fill:false, borderWidth:2 },
-        { label:'Media', data:Array(vals.length).fill(s.mean), borderColor:'#0d1b2a', borderDash:[6,3], pointRadius:0, borderWidth:1.5 },
-        { label:'+2DE', data:Array(vals.length).fill(l2p), borderColor:'#e8a838', borderDash:[4,4], pointRadius:0, borderWidth:1 },
-        { label:'-2DE', data:Array(vals.length).fill(l2n), borderColor:'#e8a838', borderDash:[4,4], pointRadius:0, borderWidth:1 },
-        { label:'+3DE', data:Array(vals.length).fill(l3p), borderColor:'#d94f3d', borderDash:[2,4], pointRadius:0, borderWidth:1.5 },
-        { label:'-3DE', data:Array(vals.length).fill(l3n), borderColor:'#d94f3d', borderDash:[2,4], pointRadius:0, borderWidth:1.5 },
+        { label:'Resultados QC', data:vals, borderColor:'#004B8D', backgroundColor:pointColors, pointBackgroundColor:pointColors, pointRadius:6, pointHoverRadius:8, tension:0.3, fill:false, borderWidth:2 },
+        { label:'Media', data:Array(vals.length).fill(s.mean), borderColor:'#003770', borderDash:[6,3], pointRadius:0, borderWidth:1.5 },
+        { label:'+2DE', data:Array(vals.length).fill(l2p), borderColor:'#F47920', borderDash:[4,4], pointRadius:0, borderWidth:1 },
+        { label:'-2DE', data:Array(vals.length).fill(l2n), borderColor:'#F47920', borderDash:[4,4], pointRadius:0, borderWidth:1 },
+        { label:'+3DE', data:Array(vals.length).fill(l3p), borderColor:'#c0392b', borderDash:[2,4], pointRadius:0, borderWidth:1.5 },
+        { label:'-3DE', data:Array(vals.length).fill(l3n), borderColor:'#c0392b', borderDash:[2,4], pointRadius:0, borderWidth:1.5 },
       ]
     },
     options:{
@@ -2239,8 +2348,8 @@ function calcularSigma() {
 
   // Violations
   const viols = checkWestgard(vals, s.mean, s.sd);
-  let vhtml = '<div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px;">';
-  vhtml += '<h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;">🔎 Verificación de Reglas de Westgard</h4>';
+  let vhtml = '<div style="background:#ffffff;border:1px solid #dde3ed;border-radius:10px;padding:18px 20px;margin-bottom:20px;">';
+  vhtml += '<h4 style="font-size:14px;font-weight:700;color:#003770;margin-bottom:10px;">🔎 Verificación de Reglas de Westgard</h4>';
   vhtml += '<div class="violations-list">';
   if(viols.length===0){
     vhtml += '<div class="violation-item ok"><div class="violation-dot ok"></div>✅ Ninguna regla de Westgard activada. La corrida es aceptable.</div>';
@@ -2257,6 +2366,11 @@ function calcularSigma() {
   document.getElementById('violations_display').innerHTML = vhtml;
 
   document.getElementById('resultados_sigma').classList.add('show');
+  // Store for PDF
+  const cfg2 = getSigmaConfig(sigma);
+  window._sigmaResult = { sigma: sigma.toFixed(2), label: cfg.label, labelDisp: cfg.labelDisp, rules: cfg.rulesPlain, N: cfg.N, R: cfg.R, lote: cfg.lote };
+  window._violations = checkWestgard(vals, s.mean, s.sd);
+  showPDFSigma();
   setTimeout(()=>document.getElementById('sigma_display').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
 }
 
@@ -2320,14 +2434,14 @@ function calcularVerificacion() {
     </div>`;
 
   document.getElementById('veri_stats').innerHTML = `
-    <div class="results-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px;">
+    <div class="results-grid" style="grid-template-columns:repeat(2,1fr);margin-bottom:20px;">
       <div class="result-card"><div class="rc-label">N muestras</div><div class="rc-value">${n}</div></div>
       <div class="result-card"><div class="rc-label">Media Lote A</div><div class="rc-value">${meanA.toFixed(3)}</div></div>
       <div class="result-card"><div class="rc-label">Media Lote B</div><div class="rc-value">${meanB.toFixed(3)}</div></div>
-      <div class="result-card"><div class="rc-label">Sesgo%</div><div class="rc-value" style="color:${absSesgo<=limiteRechazo?'var(--green)':absSesgo<=0.5*tea?'var(--amber)':'var(--red)'};">${sesgo.toFixed(2)}%</div></div>
+      <div class="result-card"><div class="rc-label">Sesgo%</div><div class="rc-value" style="color:${absSesgo<=limiteRechazo?'#2e7d32':absSesgo<=0.5*tea?'#F47920':'#c0392b'};">${sesgo.toFixed(2)}%</div></div>
       <div class="result-card"><div class="rc-label">Límite rechazo</div><div class="rc-value">${limiteRechazo.toFixed(2)}%</div><div class="rc-unit">= 0.2 × TEa</div></div>
       <div class="result-card"><div class="rc-label">t estadístico</div><div class="rc-value">${Math.abs(tStat).toFixed(3)}</div><div class="rc-unit">t crítico ≈2.0</div></div>
-      <div class="result-card"><div class="rc-label">¿p&lt;0.05?</div><div class="rc-value" style="color:${pSignif?'var(--amber)':'var(--green)'};">${pSignif?'Sí':'No'}</div><div class="rc-unit">${pSignif?'Diferencia significativa':'Sin diferencia signif.'}</div></div>
+      <div class="result-card"><div class="rc-label">¿p&lt;0.05?</div><div class="rc-value" style="color:${pSignif?'#F47920':'#2e7d32'};">${pSignif?'Sí':'No'}</div><div class="rc-unit">${pSignif?'Diferencia significativa':'Sin diferencia signif.'}</div></div>
       <div class="result-card"><div class="rc-label">TEa usado</div><div class="rc-value">${tea}%</div></div>
     </div>
     <div class="${absSesgo<=limiteRechazo?'info-box':absSesgo<=0.5*tea?'warning-box':'alert-box'}" style="margin-bottom:20px;">
@@ -2357,12 +2471,12 @@ function calcularVerificacion() {
         {
           label:'Diferencia B−A',
           data: means_ba.map((m,i)=>({x:m, y:diffs_ba[i]})),
-          backgroundColor: diffs_ba.map(d=>Math.abs(d)>1.96*sdDiffBA?'#d94f3d':'#1a9b8a'),
+          backgroundColor: diffs_ba.map(d=>Math.abs(d)>1.96*sdDiffBA?'#c0392b':'#004B8D'),
           pointRadius:6,
         },
-        { label:'Media diferencia', data:[{x:Math.min(...means_ba),y:meanDiffBA},{x:Math.max(...means_ba),y:meanDiffBA}], type:'line', borderColor:'#0d1b2a', borderDash:[6,3], pointRadius:0, borderWidth:1.5 },
-        { label:`+1.96 DE (${loa_up.toFixed(3)})`, data:[{x:Math.min(...means_ba),y:loa_up},{x:Math.max(...means_ba),y:loa_up}], type:'line', borderColor:'#d94f3d', borderDash:[4,4], pointRadius:0, borderWidth:1 },
-        { label:`-1.96 DE (${loa_dn.toFixed(3)})`, data:[{x:Math.min(...means_ba),y:loa_dn},{x:Math.max(...means_ba),y:loa_dn}], type:'line', borderColor:'#d94f3d', borderDash:[4,4], pointRadius:0, borderWidth:1 },
+        { label:'Media diferencia', data:[{x:Math.min(...means_ba),y:meanDiffBA},{x:Math.max(...means_ba),y:meanDiffBA}], type:'line', borderColor:'#003770', borderDash:[6,3], pointRadius:0, borderWidth:1.5 },
+        { label:`+1.96 DE (${loa_up.toFixed(3)})`, data:[{x:Math.min(...means_ba),y:loa_up},{x:Math.max(...means_ba),y:loa_up}], type:'line', borderColor:'#c0392b', borderDash:[4,4], pointRadius:0, borderWidth:1 },
+        { label:`-1.96 DE (${loa_dn.toFixed(3)})`, data:[{x:Math.min(...means_ba),y:loa_dn},{x:Math.max(...means_ba),y:loa_dn}], type:'line', borderColor:'#c0392b', borderDash:[4,4], pointRadius:0, borderWidth:1 },
       ]
     },
     options:{
@@ -2377,14 +2491,306 @@ function calcularVerificacion() {
 
   document.getElementById('resultados_veri').classList.add('show');
   document.getElementById('veri_chart_wrapper').style.display='block';
+  // Store for PDF and show button
+  const dc = tea / 3;
+  window._veriResult = { n, mA: meanA, mB: meanB, sesgo, limRec: limiteRechazo, dc, tStat, sig: pSignif, vA: valsA, vB: valsB, decision: absSesgo <= limiteRechazo ? 'accept' : absSesgo <= dc ? 'investigate' : 'reject' };
+  var pdfBtn = document.getElementById('pdf_veri_section');
+  if (pdfBtn) pdfBtn.style.display = 'block';
 }
 
 function cargarEjemploVeri(){
-  document.getElementById('v_analito').value='TP (segundos)';
+  document.getElementById('v_analito').value='TP (segundos) — HemosIL RecombiPlasTin 2G';
   document.getElementById('v_tea').value=15;
   document.getElementById('v_loteA').value=`13.2\n14.5\n11.8\n16.2\n12.9\n15.1\n13.8\n14.0\n12.5\n15.8`;
   document.getElementById('v_loteB').value=`13.5\n14.8\n12.1\n16.5\n13.2\n15.4\n14.0\n14.3\n12.8\n16.1`;
 }
+
+// ══════════════════════════════════════════════════
+// PDF REPORT GENERATION  (jsPDF + autoTable)
+// ══════════════════════════════════════════════════
+
+function showPDFSigma() {
+  var el = document.getElementById('pdf_sigma_section');
+  if (el) { el.style.display = 'block'; el.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+}
+function showPDFVeri() {
+  var el = document.getElementById('pdf_veri_section');
+  if (el) el.style.display = 'block';
+}
+
+function _pdfDate() {
+  var d = new Date();
+  return d.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'});
+}
+
+function _pdfHeader(doc, title) {
+  doc.setFillColor(0,55,112);   doc.rect(0,0,210,26,'F');
+  doc.setFillColor(244,121,32); doc.rect(0,26,210,3,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(255,255,255);
+  doc.text('CCI - Hematologia & Coagulacion', 14, 11);
+  doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(180,200,220);
+  doc.text('ISO 15189:2022 - CLSI C24-Ed4 - SEQCML', 14, 19);
+  doc.setFontSize(8); doc.setTextColor(255,255,255);
+  doc.text(_pdfDate(), 196, 11, {align:'right'});
+  doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(0,55,112);
+  doc.text(title, 14, 40);
+  doc.setDrawColor(244,121,32); doc.setLineWidth(0.6); doc.line(14,43,196,43);
+  return 50;
+}
+
+function _pdfFooter(doc, page, total) {
+  doc.setFillColor(240,244,248); doc.rect(0,286,210,12,'F');
+  doc.setDrawColor(0,55,112); doc.setLineWidth(0.3); doc.line(14,286,196,286);
+  doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(74,90,120);
+  doc.text('Documento generado automaticamente - Control de Calidad Interno', 14, 293);
+  doc.text('Pagina ' + page + ' de ' + total, 196, 293, {align:'right'});
+}
+
+function _pdfSection(doc, text, y) {
+  doc.setFillColor(0,55,112); doc.rect(14,y,182,7,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255,255,255);
+  doc.text(text.toUpperCase(), 17, y+5);
+  return y + 11;
+}
+
+function _pdfTable(doc, head, body, y) {
+  doc.autoTable({
+    startY: y,
+    head: [head],
+    body: body,
+    styles: { fontSize:9, cellPadding:2.8 },
+    headStyles: { fillColor:[0,55,112], textColor:255, fontStyle:'bold', fontSize:9 },
+    alternateRowStyles: { fillColor:[240,244,248] },
+    bodyStyles: { textColor:[26,26,26] },
+    margin: { left:14, right:14 }
+  });
+  return doc.lastAutoTable.finalY + 7;
+}
+
+function _pdfSign(doc, y) {
+  if (y > 248) { doc.addPage(); y = 22; }
+  y = _pdfSection(doc, 'Conformidad y firma', y);
+  doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor(74,90,120);
+  doc.text('Debe ser revisado y firmado por el responsable de calidad del laboratorio para su validez como registro de auditoria.', 14, y, {maxWidth:182});
+  y += 10;
+  ['Realizado por:', 'Revisado por (Responsable de Calidad):', 'Fecha de revision:'].forEach(function(lbl) {
+    doc.setFont('helvetica','bold'); doc.setTextColor(0,55,112); doc.setFontSize(9);
+    doc.text(lbl, 14, y);
+    doc.setDrawColor(0,55,112); doc.setLineWidth(0.3); doc.line(78, y+1, 196, y+1);
+    y += 12;
+  });
+  return y;
+}
+
+// ── PDF SIGMA ──────────────────────────────────────
+function generarPDFSigma() {
+  if (!window._qcStats || !window._sigmaResult) {
+    alert('Primero calcula la Sigma Metrica (completa la Fase 2).'); return;
+  }
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+  var s = window._qcStats;
+  var sr = window._sigmaResult;
+  var analito  = (document.getElementById('analito') || {}).value || 'No especificado';
+  var nivel    = (document.getElementById('nivel')   || {}).value || '';
+  var tea      = (document.getElementById('tea')     || {}).value || '';
+  var sesgo    = (document.getElementById('sesgo')   || {}).value || '';
+  var fuente   = (document.getElementById('tea_fuente') || {}).value || '';
+
+  var y = _pdfHeader(doc, 'Informe de Sigma Metrica y Levey-Jennings');
+
+  // 1. Identificacion
+  y = _pdfSection(doc, '1. Identificacion del control', y);
+  var loteCtrl   = (document.getElementById('lote_control')    || {}).value || 'No especificado';
+  var nombreCtrl = (document.getElementById('nombre_control')   || {}).value || 'No especificado';
+  var equipoS    = (document.getElementById('equipo_sigma')     || {}).value || '';
+  var respS      = (document.getElementById('responsable_sigma')|| {}).value || '';
+  y = _pdfTable(doc,
+    ['Campo','Valor'],
+    [
+      ['Analito / Prueba',         analito],
+      ['Nivel de control',         nivel],
+      ['Material de control',      nombreCtrl],
+      ['N de lote del control',    loteCtrl],
+      ['Equipo / Analizador',      equipoS],
+      ['Responsable del analisis', respS],
+      ['Fecha del informe',        _pdfDate()],
+      ['N determinaciones',        String(s.n)],
+    ], y);
+
+  // 2. Estadisticos
+  y = _pdfSection(doc, '2. Estadisticos descriptivos', y);
+  var cvInterp = s.cv < 3 ? 'Excelente (<3%)' : s.cv < 5 ? 'Aceptable (3-5%)' : 'Elevado (>5%), revisar';
+  y = _pdfTable(doc,
+    ['Parametro','Valor','Interpretacion'],
+    [
+      ['Media (X (media))',               s.mean.toFixed(4),       'Valor central de la corrida'],
+      ['Desviacion Estandar (DE)', s.sd.toFixed(4),       'Calculada con n-1 (CLSI C24)'],
+      ['CV%',                     s.cv.toFixed(2)    + '%',          cvInterp],
+      ['Limites aviso +/-2DE',       (s.mean-2*s.sd).toFixed(3) + ' - ' + (s.mean+2*s.sd).toFixed(3), 'Regla 1-2s'],
+      ['Limites rechazo +/-3DE',     (s.mean-3*s.sd).toFixed(3) + ' - ' + (s.mean+3*s.sd).toFixed(3), 'Regla 1-3s'],
+      ['Min / Max',               s.min.toFixed(3) + ' / ' + s.max.toFixed(3), 'Rango observado'],
+    ], y);
+
+  // 3. Sigma Metrica
+  y = _pdfSection(doc, '3. Sigma Metrica', y);
+  y = _pdfTable(doc,
+    ['Parametro','Valor','Fuente / Criterio'],
+    [
+      ['TEa',            tea + '%',              fuente],
+      ['Sesgo%',         sesgo + '%',            'Programa ECA / SEQCML'],
+      ['CV%',            s.cv.toFixed(2) + '%',  'Calculado de corrida QC'],
+      ['Formula',        '(' + tea + '% TEa - ' + sesgo + '% Sesgo) / ' + s.cv.toFixed(2) + '% CV', 'Sigma = (TEa - Sesgo) / CV%'],
+      ['SIGMA METRICA',  sr.sigma + ' sigma',     sr.label || ''],
+    ], y);
+
+  // 4. Estrategia
+  if (sr.rules && sr.rules.length > 0) {
+    y = _pdfSection(doc, '4. Estrategia de control recomendada (CLSI C24-Ed4)', y);
+    y = _pdfTable(doc,
+      ['Parametro','Valor'],
+      [
+        ['Reglas de Westgard activas',    (sr.rules||[]).join(' | ')],
+        ['N controles por corrida',       String(sr.N)],
+        ['Pacientes max. entre controles',String(sr.lote)],
+        ['R corridas por control',        String(sr.R)],
+      ], y);
+  }
+
+  // 5. Westgard violations
+  if (window._violations) {
+    var viols = window._violations;
+    var rejects = viols.filter(function(v){return v.type==='reject';});
+    if (y > 220) { doc.addPage(); y = 22; }
+    y = _pdfSection(doc, '5. Verificacion de reglas de Westgard', y);
+    if (viols.length === 0) {
+      doc.setFillColor(232,240,249); doc.rect(14,y,182,9,'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(0,55,112);
+      doc.text('CORRIDA ACEPTADA - Ninguna regla activada', 17, y+6); y += 13;
+    } else {
+      var sc = rejects.length > 0 ? [192,57,43] : [244,121,32];
+      var st = rejects.length > 0 ? 'CORRIDA RECHAZADA' : 'ADVERTENCIA';
+      doc.setFillColor(sc[0],sc[1],sc[2]); doc.rect(14,y,182,9,'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255,255,255);
+      doc.text(st + ' - ' + viols.length + ' regla(s) activada(s)', 17, y+6); y += 13;
+      y = _pdfTable(doc, ['Regla','Tipo','Descripcion'],
+        viols.map(function(v){
+        var rname = v.rule.replace(/[₁₂₃₄₅₆₇₈₉₀ₛₓ]/g, function(ch) {
+          var map = {'?':'1','?':'2','?':'3','?':'4','?':'5','?':'6','?':'7','?':'8','?':'9','?':'0','?':'s','?':'x'};
+          return map[ch] || ch;
+        });
+        return [rname, v.type==='reject'?'RECHAZO':'AVISO', v.msg.replace(/[₁₂₃₄₅₆₇₈₉₀ₛₓ+/-]/g, function(ch){
+          var map = {'?':'1','?':'2','?':'3','?':'4','?':'5','?':'6','?':'7','?':'8','?':'9','?':'0','?':'s','?':'x','+/-':'+-'};
+          return map[ch] || ch;
+        })];
+      }), y);
+    }
+  }
+
+  // 6. Raw data
+  if (window._qcVals && window._qcVals.length > 0) {
+    if (y > 200) { doc.addPage(); y = 22; }
+    y = _pdfSection(doc, '6. Datos de la corrida de QC', y);
+    y = _pdfTable(doc, ['N','Valor','Z-score','Estado'],
+      window._qcVals.map(function(v,i){
+        var z = (v - s.mean) / s.sd;
+        var zabs = Math.abs(z);
+        var st = zabs > 3 ? ' FUERA +/-3DE' : zabs > 2 ? ' FUERA +/-2DE' : ' OK';
+        return [String(i+1), v.toFixed(4), z.toFixed(2), st];
+      }), y);
+  }
+
+  _pdfSign(doc, doc.lastAutoTable ? doc.lastAutoTable.finalY + 8 : y);
+
+  var total = doc.getNumberOfPages();
+  for (var i = 1; i <= total; i++) { doc.setPage(i); _pdfFooter(doc, i, total); }
+
+  doc.save('Informe_Sigma_' + analito.replace(/[^a-zA-Z0-9]/g,'_') + '_' + new Date().toISOString().slice(0,10) + '.pdf');
+}
+
+// ── PDF VERIFICACION DE LOTE ────────────────────────
+function generarPDFVeri() {
+  if (!window._veriResult) {
+    alert('Primero analiza el cambio de lote.'); return;
+  }
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+  var vr = window._veriResult;
+  var analito = (document.getElementById('v_analito') || {}).value || 'No especificado';
+  var tea     = (document.getElementById('v_tea')     || {}).value || '';
+
+  var y = _pdfHeader(doc, 'Informe de Verificacion de Cambio de Lote de Reactivo');
+
+  // 1. Identificacion
+  y = _pdfSection(doc, '1. Identificacion', y);
+  var loteAid  = (document.getElementById('lote_A_id')       || {}).value || 'No especificado';
+  var loteBid  = (document.getElementById('lote_B_id')       || {}).value || 'No especificado';
+  var reactivo = (document.getElementById('nombre_reactivo') || {}).value || '';
+  var equipoV  = (document.getElementById('equipo_veri')     || {}).value || '';
+  var fechaV   = _pdfDate();
+  y = _pdfTable(doc, ['Campo','Valor'],
+    [
+      ['Analito / Prueba',        analito],
+      ['Reactivo verificado',     reactivo],
+      ['Lote A (actual/saliente)',loteAid],
+      ['Lote B (nuevo/entrante)', loteBid],
+      ['Equipo / Analizador',     equipoV],
+      ['Fecha de la verificacion', fechaV],
+      ['TEa utilizado',           tea + '%'],
+      ['N pares de muestras',     String(vr.n)],
+    ], y);
+
+  // 2. Decision
+  y = _pdfSection(doc, '2. Decision (CLSI EP26-A)', y);
+  var dc = vr.decision;
+  var dcColor = dc==='accept' ? [0,55,112] : dc==='reject' ? [192,57,43] : [244,121,32];
+  var dcText  = dc==='accept' ? 'LOTE ACEPTADO' : dc==='reject' ? 'LOTE RECHAZADO' : 'INVESTIGAR - buscar causa tecnica';
+  doc.setFillColor(dcColor[0],dcColor[1],dcColor[2]); doc.rect(14,y,182,11,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(255,255,255);
+  doc.text(dcText, 105, y+7.5, {align:'center'}); y += 16;
+
+  // 3. Estadisticos
+  y = _pdfSection(doc, '3. Resultados estadisticos', y);
+  y = _pdfTable(doc, ['Parametro','Valor','Criterio (CLSI EP26-A)'],
+    [
+      ['Media Lote A (actual)',              vr.mA.toFixed(4), '-'],
+      ['Media Lote B (nuevo)',               vr.mB.toFixed(4), '-'],
+      ['Sesgo%',                             vr.sesgo.toFixed(2) + '%', 'Debe ser < ' + vr.limRec.toFixed(2) + '% (limite rechazo)'],
+      ['Limite de rechazo (0.2 x TEa)',      vr.limRec.toFixed(2) + '%', 'CLSI EP26-A'],
+      ['Diferencia Critica (1/3 x TEa)',     vr.dc.toFixed(2) + '%', 'Maxima diferencia aceptable'],
+      ['t estadistico (pareado)',            Math.abs(vr.tStat).toFixed(3), 't critico ? 2.0'],
+      ['Diferencia estadisticamente significativa?', vr.sig ? 'Si (p<0.05)' : 'No (p>=0.05)', '-'],
+    ], y);
+
+  // 4. Datos paralelos
+  if (y > 190) { doc.addPage(); y = 22; }
+  y = _pdfSection(doc, '4. Datos de medicion paralela', y);
+  y = _pdfTable(doc, ['N','Lote A','Lote B','Dif. (B?A)','Dif. %'],
+    vr.vA.map(function(a,i){
+      var b = vr.vB[i];
+      return [String(i+1), a.toFixed(4), b.toFixed(4), (b-a).toFixed(4), (Math.abs(b-a)/a*100).toFixed(2)+'%'];
+    }), y);
+
+  // 5. Normativa
+  if (y > 220) { doc.addPage(); y = 22; }
+  y = _pdfSection(doc, '5. Bases normativas', y);
+  y = _pdfTable(doc, ['Norma / Referencia','Aplicacion'],
+    [
+      ['CLSI EP26-A (rev. 2022)',                          'Protocolo de verificacion lote a lote'],
+      ['ISO 15189:2022 par.6.4.3',                           'Verificacion de reactivos antes del uso clinico'],
+      ['van Schrojenstein Lantman et al. CCLM 2022;60(5)','Limite de rechazo = 0.2 x TEa'],
+      ['ICSH 2024',                                       'Criterios especificos para coagulacion'],
+      ['SEQCML',                                          'Jerarquia de criterios de calidad en Espana'],
+    ], y);
+
+  _pdfSign(doc, doc.lastAutoTable ? doc.lastAutoTable.finalY + 8 : y);
+
+  var total = doc.getNumberOfPages();
+  for (var i = 1; i <= total; i++) { doc.setPage(i); _pdfFooter(doc, i, total); }
+
+  doc.save('Informe_Verificacion_Lote_' + analito.replace(/[^a-zA-Z0-9]/g,'_') + '_' + new Date().toISOString().slice(0,10) + '.pdf');
+}
+
 </script>
 
 </body>
