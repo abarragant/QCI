@@ -1709,10 +1709,7 @@ nav { padding: 12px 0; flex: 1; }
           <label>Equipo / analizador</label>
           <input type="text" id="equipo_sigma" placeholder="ej: ACL TOP 750 LAS, ACL TOP 500, CS-5100...">
         </div>
-        <div class="form-group">
-          <label>Responsable del análisis</label>
-          <input type="text" id="responsable_sigma" placeholder="Nombre y categoría profesional">
-        </div>
+        
       </div>
     </div>
   </div>
@@ -2127,12 +2124,25 @@ function toggleIntro(toggle) {
 
 // ─── PARSE VALUES ───
 function parseValues(raw) {
-  return raw
-    .replace(/,(?=\s*[\d\-])/g, '\n')
-    .replace(/;/g, '\n')
-    .split(/[\n\r\t ]+/)
-    .map(v => parseFloat(v.replace(',', '.')))
-    .filter(v => !isNaN(v) && isFinite(v));
+  // Detect if comma is decimal separator (e.g. "42,4 42,2") or list separator (e.g. "42, 43, 44")
+  // If pattern "digit,digit" exists without spaces around comma → comma is decimal
+  var isDecimalComma = /\d,\d/.test(raw) && !/\d,\s+\d/.test(raw);
+  if (isDecimalComma) {
+    // Comma is decimal: replace spaces, tabs, newlines, semicolons as separators
+    return raw
+      .replace(/;/g, ' ')
+      .split(/[\n\r\t ]+/)
+      .map(v => parseFloat(v.replace(',', '.')))
+      .filter(v => !isNaN(v) && isFinite(v));
+  } else {
+    // Comma is separator
+    return raw
+      .replace(/,/g, '\n')
+      .replace(/;/g, '\n')
+      .split(/[\n\r\t ]+/)
+      .map(v => parseFloat(v.replace(',', '.')))
+      .filter(v => !isNaN(v) && isFinite(v));
+  }
 }
 
 // ─── ESTADÍSTICOS BÁSICOS ───
@@ -2604,7 +2614,6 @@ function generarPDFSigma() {
   var loteCtrl   = (document.getElementById('lote_control')    || {}).value || 'No especificado';
   var nombreCtrl = (document.getElementById('nombre_control')   || {}).value || 'No especificado';
   var equipoS    = (document.getElementById('equipo_sigma')     || {}).value || '';
-  var respS      = (document.getElementById('responsable_sigma')|| {}).value || '';
   y = _pdfTable(doc,
     ['Campo','Valor'],
     [
@@ -2613,7 +2622,6 @@ function generarPDFSigma() {
       ['Material de control',      nombreCtrl],
       ['N de lote del control',    loteCtrl],
       ['Equipo / Analizador',      equipoS],
-      ['Responsable del analisis', respS],
       ['Fecha del informe',        _pdfDate()],
       ['N determinaciones',        String(s.n)],
     ], y);
